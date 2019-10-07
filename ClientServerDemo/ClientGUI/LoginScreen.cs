@@ -61,25 +61,12 @@ namespace ClientGUI
         {
             if (selectBike.SelectedItem != null)
             {
-                if (PatientExist(patientNumber.Text))
-                {
                     bleHeartHandler.Connect("Decathlon Dual HR", "Heartrate");
                     bleBikeHandler.Connect(selectBike.SelectedItem.ToString(), "6e40fec1-b5a3-f393-e0a9-e50e24dcca9e");
                     // connect.Connect();
                     //connect.sendPatient(new Patient(name.Text, patientNumber.Text));
 
                 }
-                else
-                {
-                    this.unknownNumber.Text = "Patiëntnummer bestaat niet!";
-                    this.unknownNumber.Visible = true;
-                    
-            }
-            }
-            else
-            {
-                this.unknownNumber.Text = "     Geen fiets geselecteerd!";
-                this.unknownNumber.Visible = true;
             }
         }
 
