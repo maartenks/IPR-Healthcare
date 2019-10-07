@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Sockets;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-
-namespace ClientServerDemo
+﻿namespace Server.IO.Data
 {
-    class Client
+    public class Client
     {
+<<<<<<< HEAD
         private TcpClient tcpClient;
         private Program program;
         private NetworkStream stream;
@@ -93,5 +86,10 @@ namespace ClientServerDemo
             stream.Flush();
         }
         //hiermee kan je data schrijven 
+=======
+        // Hier kan je de soorten data aangeven
+        public string Name { get; set; }
+        public int Id { get; set; }
+>>>>>>> master
     }
 }
