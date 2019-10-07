@@ -49,7 +49,7 @@ namespace ClientServerDemo
                 case "broadcast":
                     Program.Broadcast(this, data[1]);
                     break;
-                case "vr":
+                case "hart":
                     Console.WriteLine(data[1]);
                     break;
                 case "fiets":

@@ -12,3 +12,6 @@ C:\Users\maart\OneDrive\Documenten\Proftaak Weerstation\weerstation\IPR-Healthca
 C:\Users\maart\OneDrive\Documenten\Proftaak Weerstation\weerstation\IPR-Healthcare\ClientServerDemo\Server\obj\Debug\Server.csproj.CoreCompileInputs.cache
 C:\Users\maart\OneDrive\Documenten\Proftaak Weerstation\weerstation\IPR-Healthcare\ClientServerDemo\Server\obj\Debug\Server.exe
 C:\Users\maart\OneDrive\Documenten\Proftaak Weerstation\weerstation\IPR-Healthcare\ClientServerDemo\Server\obj\Debug\Server.pdb
+C:\Users\maart\OneDrive\Documenten\Proftaak Weerstation\weerstation\IPR-Healthcare\ClientServerDemo\Server\bin\Debug\Newtonsoft.Json.dll
+C:\Users\maart\OneDrive\Documenten\Proftaak Weerstation\weerstation\IPR-Healthcare\ClientServerDemo\Server\bin\Debug\Newtonsoft.Json.xml
+C:\Users\maart\OneDrive\Documenten\Proftaak Weerstation\weerstation\IPR-Healthcare\ClientServerDemo\Server\obj\Debug\Server.csproj.CopyComplete

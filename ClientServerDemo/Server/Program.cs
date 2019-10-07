@@ -18,10 +18,10 @@ namespace ClientServerDemo
         static void Main(string[] args)
         {
             // Testje om clients in te laden (dit moet later eigenlijk in de packethandling van de server worden toegepast ofcourse)
-            TestLoadClients();
-            Console.ReadKey();
+ //           TestLoadClients();
+ //           Console.ReadKey();
 
-            //Start();
+            Start();
         }
 
         private static async void TestLoadClients()

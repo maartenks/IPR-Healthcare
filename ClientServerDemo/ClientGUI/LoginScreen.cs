@@ -6,7 +6,6 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using ClientGUI.Bluetooth;
 using ClientGUI.Conversion;
@@ -23,13 +22,10 @@ namespace ClientGUI
         private static PageConversion pageConversion;
         private BleBikeHandler bleBikeHandler;
         private BleHeartHandler bleHeartHandler;
-        private BLE bleBike;
-        private BLE bleHeart;
 
         private List<string> bleBikeList;
         private List<string> bleHeartList;
         private bool started;
-        private System.Timers.Timer timer;
 
         private int port;
         private string patient;
@@ -37,6 +33,10 @@ namespace ClientGUI
         private static NetworkStream stream;
         private static byte[] buffer = new byte[1024];
         static string totalBuffer = "";
+        private int seconds = 0;
+        private int minutes = 0;
+        private int totalSeconds = 0;
+        private bool intensive = false;
 
         public LoginScreen()
         {
@@ -44,7 +44,7 @@ namespace ClientGUI
             InitializeDeclarations();
             LoadBikes();
             this.port = 80;
-            timer = new System.Timers.Timer();
+            time = new System.Windows.Forms.Timer();
         }
 
         private void InitializeDeclarations()
@@ -67,40 +67,17 @@ namespace ClientGUI
 
         private void Login_Click(object sender, EventArgs e)
         {
-<<<<<<< Updated upstream
-            if (selectBike.SelectedItem != null)
-            {
-                if (PatientExist(patientNumber.Text))
-                {
-                    bleHeartHandler.Connect("Decathlon Dual HR", "Heartrate");
-                    bleBikeHandler.Connect(selectBike.SelectedItem.ToString(), "6e40fec1-b5a3-f393-e0a9-e50e24dcca9e");
-                    // connect.Connect();
-                    //connect.sendPatient(new Patient(name.Text, patientNumber.Text));
-
-                }
-                else
-                {
-                    this.unknownNumber.Text = "Patiëntnummer bestaat niet!";
-                    this.unknownNumber.Visible = true;
-                    
-            }
-            }
-            else
-            {
-                this.unknownNumber.Text = "     Geen fiets geselecteerd!";
-                this.unknownNumber.Visible = true;
-=======
- //           if (selectBike.SelectedItem != null)
- //           {
- //               bleHeartHandler.Connect("Decathlon Dual HR", "Heartrate");
- //               bleBikeHandler.Connect(selectBike.SelectedItem.ToString(), "6e40fec1-b5a3-f393-e0a9-e50e24dcca9e");
+                //           if (selectBike.SelectedItem != null)
+                //           {
+                //               bleHeartHandler.Connect("Decathlon Dual HR", "Heartrate");
+                //               bleBikeHandler.Connect(selectBike.SelectedItem.ToString(), "6e40fec1-b5a3-f393-e0a9-e50e24dcca9e");
                 this.patient = name.Text;
                 ConnectServer();
                 name.Enabled = false;
                 login.Enabled = false;
                 startSession.Enabled = true;
- //               }
->>>>>>> Stashed changes
+                PreInstructions();
+                //               }
             }
 
         private void Name_Enter(object sender, EventArgs e)
@@ -149,6 +126,50 @@ namespace ClientGUI
             Write($"hart\r\n{v}\r\n\r\n");
         }
 
+        private void StartSession_Click(object sender, EventArgs e)
+        {
+            Initialize_Timer();
+        }
+
+        private void Initialize_Timer()
+        {
+            if (timePassed.Text == "00:00") { WarmingUp(); }
+            time.Interval = 100;
+            time.Tick += new EventHandler(Timertick);
+            time.Start();
+        }
+
+        private async void Timertick(object sender, EventArgs e)
+        {
+            totalSeconds++;
+            this.seconds = totalSeconds % 60;
+            this.minutes = totalSeconds / 60;
+            if (this.seconds < 10) { timePassed.Text = "0" + this.minutes + ":0" + this.seconds; }
+            else { timePassed.Text = "0" + this.minutes + ":" + this.seconds; }
+            if (timePassed.Text == "02:00") { OnLevel(); }
+            if (timePassed.Text == "04:00") { HoldFrequency(); intensive = true; }
+            if (timePassed.Text == "06:00") { CoolingDown(); intensive = false; }
+            if (timePassed.Text == "07:00") { time.Stop(); }
+//            if (totalSeconds % 10 == 0) { await bleBikeHandler.DataAsync(); WriteBike(bleBikeHandler.sendData()); }
+//            SendData();
+
+        }
+
+        private async void SendData()
+        {
+            await bleHeartHandler.DataAsync();
+            if (intensive)
+            {
+                if (totalSeconds % 15 == 0)
+                {
+                    WriteHeart(bleHeartHandler.sendData());
+                } 
+            } else if (totalSeconds % 60 == 0 )
+            {
+                WriteHeart(bleHeartHandler.sendData());
+            }
+        }
+
 
         private static void OnRead(IAsyncResult ar)
         {
@@ -189,8 +210,15 @@ namespace ClientGUI
 
         }
 
+        private void PreInstructions()
+        {
+            instructions.AppendText("De patiënt doet een hartslagband om en neemt plaats op de fiets. Stel het zadel op de juiste hoogte in, zodanig dat in de laagste stand van het pedaal, de knie zeer licht is gebogen (170o). ");
+
+        }
+
         private void WarmingUp()
         {
+            instructions.Clear();
             instructions.AppendText("We beginnnen met de warming up. Tijdens deze warming-up houden we de trapfrequentie tussen de 50 en 60 omwentelingen per minuut.");
             
         }
@@ -213,6 +241,6 @@ namespace ClientGUI
             instructions.AppendText("De weerstand wordt gedurende een minuut afgebouwd.");
         }
 
-
+       
     }
 }
