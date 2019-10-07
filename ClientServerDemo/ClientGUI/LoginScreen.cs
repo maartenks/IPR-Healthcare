@@ -12,6 +12,8 @@ using ClientGUI.Bluetooth;
 using ClientGUI.Conversion;
 using ClientGUI.Utils;
 using System.Threading;
+using System.Net.Sockets;
+using System.Text.RegularExpressions;
 
 namespace ClientGUI
 {
@@ -26,16 +28,22 @@ namespace ClientGUI
 
         private List<string> bleBikeList;
         private List<string> bleHeartList;
-        private ConnectServer connect;
         private bool started;
         private System.Timers.Timer timer;
 
+        private int port;
+        private string patient;
+        private TcpClient client;
+        private static NetworkStream stream;
+        private static byte[] buffer = new byte[1024];
+        static string totalBuffer = "";
+
         public LoginScreen()
         {
-            connect = new ConnectServer();
             InitializeComponent();
             InitializeDeclarations();
             LoadBikes();
+            this.port = 80;
             timer = new System.Timers.Timer();
         }
 
@@ -59,6 +67,7 @@ namespace ClientGUI
 
         private void Login_Click(object sender, EventArgs e)
         {
+<<<<<<< Updated upstream
             if (selectBike.SelectedItem != null)
             {
                 if (PatientExist(patientNumber.Text))
@@ -80,8 +89,19 @@ namespace ClientGUI
             {
                 this.unknownNumber.Text = "     Geen fiets geselecteerd!";
                 this.unknownNumber.Visible = true;
+=======
+ //           if (selectBike.SelectedItem != null)
+ //           {
+ //               bleHeartHandler.Connect("Decathlon Dual HR", "Heartrate");
+ //               bleBikeHandler.Connect(selectBike.SelectedItem.ToString(), "6e40fec1-b5a3-f393-e0a9-e50e24dcca9e");
+                this.patient = name.Text;
+                ConnectServer();
+                name.Enabled = false;
+                login.Enabled = false;
+                startSession.Enabled = true;
+ //               }
+>>>>>>> Stashed changes
             }
-        }
 
         private void Name_Enter(object sender, EventArgs e)
         {
@@ -91,7 +111,6 @@ namespace ClientGUI
 
                 name.ForeColor = Color.Black;
             }
-
         }
 
         private void Name_Leave(object sender, EventArgs e)
@@ -103,25 +122,97 @@ namespace ClientGUI
             }
         }
 
-        private void PatientNumber_Enter(object sender, EventArgs e)
+        private void ConnectServer()
         {
-            if (patientNumber.Text == "Patiëntnummer")
-            {
-                patientNumber.Text = "";
+            client = new TcpClient();
+            client.Connect("localhost", this.port);
 
-                patientNumber.ForeColor = Color.Black;
-            }
+            stream = client.GetStream();
+            stream.BeginRead(buffer, 0, buffer.Length, new AsyncCallback(OnRead), null);
+
         }
 
-        private void PatientNumber_Leave(object sender, EventArgs e)
+        private static void Write(string v)
         {
-            if (patientNumber.Text == "")
-            {
-                patientNumber.Text = "Patiëntnummer";
+            stream.Write(System.Text.Encoding.ASCII.GetBytes(v), 0, v.Length);
+            stream.Flush();
 
-                patientNumber.ForeColor = Color.Silver;
-            }
         }
+
+        private static void WriteBike(string v)
+        {
+            Write($"fiets\r\n{v}\r\n\r\n");
+        }
+
+        private static void WriteHeart(string v)
+        {
+            Write($"hart\r\n{v}\r\n\r\n");
+        }
+
+
+        private static void OnRead(IAsyncResult ar)
+        {
+            //message received
+            Console.WriteLine("got data");
+            int receivedBytes = stream.EndRead(ar);
+            totalBuffer += System.Text.Encoding.ASCII.GetString(buffer, 0, receivedBytes);
+
+            // from bytes to string
+            while (totalBuffer.Contains("\r\n\r\n"))
+            {
+                string packet = totalBuffer.Substring(0, totalBuffer.IndexOf("\r\n\r\n"));
+                totalBuffer = totalBuffer.Substring(totalBuffer.IndexOf("\r\n\r\n") + 4);
+
+                string[] data = Regex.Split(packet, "\r\n");
+                handlePacket(data);
+            }
+
+            // begin waiting for next 
+            stream.BeginRead(buffer, 0, buffer.Length, new AsyncCallback(OnRead), null);
+
+
+        }
+
+        private static void handlePacket(string[] data)
+        {
+            switch (data[0])
+            {
+                case "login":
+                    Console.WriteLine($"Je bent ingelogd: {data[1]}");
+                    break;
+                case "fiets":
+                    break;
+                default:
+                    Console.WriteLine("Onbekend pakketje");
+                    break;
+            }
+
+        }
+
+        private void WarmingUp()
+        {
+            instructions.AppendText("We beginnnen met de warming up. Tijdens deze warming-up houden we de trapfrequentie tussen de 50 en 60 omwentelingen per minuut.");
+            
+        }
+
+        private void OnLevel()
+        {
+            instructions.Clear();
+            instructions.AppendText("Vanaf nu bouwen we de weerstand op. De trapfrequentie moet rond de 60 blijven liggen. De weerstand wordt opgebouwd totdat de hartfrequentie 130 slagen per minuut is.");
+        }
+
+        private void HoldFrequency()
+        {
+            instructions.Clear();
+            instructions.AppendText("Vanaf nu wordt de frequentie twee minuten lang aangehouden.");
+        }
+        
+        private void CoolingDown()
+        {
+            instructions.Clear();
+            instructions.AppendText("De weerstand wordt gedurende een minuut afgebouwd.");
+        }
+
 
     }
 }

@@ -5,3 +5,10 @@ C:\Users\maart\OneDrive\Documenten\Proftaak Weerstation\weerstation\Remoteshit\S
 C:\Users\maart\OneDrive\Documenten\Proftaak Weerstation\weerstation\Remoteshit\Sprint 3\ClientServerDemo\Server\obj\Debug\Server.csproj.CoreCompileInputs.cache
 C:\Users\maart\OneDrive\Documenten\Proftaak Weerstation\weerstation\Remoteshit\Sprint 3\ClientServerDemo\Server\obj\Debug\Server.exe
 C:\Users\maart\OneDrive\Documenten\Proftaak Weerstation\weerstation\Remoteshit\Sprint 3\ClientServerDemo\Server\obj\Debug\Server.pdb
+C:\Users\maart\OneDrive\Documenten\Proftaak Weerstation\weerstation\IPR-Healthcare\ClientServerDemo\Server\bin\Debug\Server.exe.config
+C:\Users\maart\OneDrive\Documenten\Proftaak Weerstation\weerstation\IPR-Healthcare\ClientServerDemo\Server\bin\Debug\Server.exe
+C:\Users\maart\OneDrive\Documenten\Proftaak Weerstation\weerstation\IPR-Healthcare\ClientServerDemo\Server\bin\Debug\Server.pdb
+C:\Users\maart\OneDrive\Documenten\Proftaak Weerstation\weerstation\IPR-Healthcare\ClientServerDemo\Server\obj\Debug\Server.csprojAssemblyReference.cache
+C:\Users\maart\OneDrive\Documenten\Proftaak Weerstation\weerstation\IPR-Healthcare\ClientServerDemo\Server\obj\Debug\Server.csproj.CoreCompileInputs.cache
+C:\Users\maart\OneDrive\Documenten\Proftaak Weerstation\weerstation\IPR-Healthcare\ClientServerDemo\Server\obj\Debug\Server.exe
+C:\Users\maart\OneDrive\Documenten\Proftaak Weerstation\weerstation\IPR-Healthcare\ClientServerDemo\Server\obj\Debug\Server.pdb

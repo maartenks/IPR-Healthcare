@@ -28,11 +28,19 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.login = new System.Windows.Forms.Button();
             this.name = new System.Windows.Forms.TextBox();
             this.patientNumber = new System.Windows.Forms.TextBox();
             this.unknownNumber = new System.Windows.Forms.Label();
             this.selectBike = new System.Windows.Forms.ComboBox();
+<<<<<<< Updated upstream
+=======
+            this.startSession = new System.Windows.Forms.Button();
+            this.instructions = new System.Windows.Forms.RichTextBox();
+            this.time = new System.Windows.Forms.Timer(this.components);
+            this.timePassed = new System.Windows.Forms.Label();
+>>>>>>> Stashed changes
             this.SuspendLayout();
             // 
             // login
@@ -61,6 +69,7 @@
             this.name.Text = "Naam";
             this.name.Enter += new System.EventHandler(this.Name_Enter);
             this.name.Leave += new System.EventHandler(this.Name_Leave);
+<<<<<<< Updated upstream
             // 
             // patientNumber
             // 
@@ -89,6 +98,8 @@
             this.unknownNumber.TabIndex = 3;
             this.unknownNumber.Text = "Patiëntnummer bestaat niet!";
             this.unknownNumber.Visible = false;
+=======
+>>>>>>> Stashed changes
             // 
             // selectBike
             // 
@@ -103,11 +114,47 @@
             this.selectBike.TabIndex = 6;
             this.selectBike.Text = "Selecteer een fiets";
             // 
+<<<<<<< Updated upstream
+=======
+            // startSession
+            // 
+            this.startSession.Enabled = false;
+            this.startSession.Location = new System.Drawing.Point(12, 349);
+            this.startSession.Name = "startSession";
+            this.startSession.Size = new System.Drawing.Size(145, 89);
+            this.startSession.TabIndex = 8;
+            this.startSession.Text = "Start";
+            this.startSession.UseVisualStyleBackColor = true;
+            // 
+            // instructions
+            // 
+            this.instructions.Location = new System.Drawing.Point(235, 12);
+            this.instructions.Name = "instructions";
+            this.instructions.Size = new System.Drawing.Size(553, 426);
+            this.instructions.TabIndex = 9;
+            this.instructions.Text = "";
+            // 
+            // timePassed
+            // 
+            this.timePassed.AutoSize = true;
+            this.timePassed.Location = new System.Drawing.Point(12, 326);
+            this.timePassed.Name = "timePassed";
+            this.timePassed.Size = new System.Drawing.Size(49, 20);
+            this.timePassed.TabIndex = 10;
+            this.timePassed.Text = "00:00";
+            // 
+>>>>>>> Stashed changes
             // LoginScreen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+<<<<<<< Updated upstream
+=======
+            this.Controls.Add(this.timePassed);
+            this.Controls.Add(this.instructions);
+            this.Controls.Add(this.startSession);
+>>>>>>> Stashed changes
             this.Controls.Add(this.selectBike);
             this.Controls.Add(this.unknownNumber);
             this.Controls.Add(this.patientNumber);
@@ -127,5 +174,12 @@
         private System.Windows.Forms.TextBox patientNumber;
         private System.Windows.Forms.Label unknownNumber;
         private System.Windows.Forms.ComboBox selectBike;
+<<<<<<< Updated upstream
+=======
+        private System.Windows.Forms.Button startSession;
+        private System.Windows.Forms.RichTextBox instructions;
+        private System.Windows.Forms.Timer time;
+        private System.Windows.Forms.Label timePassed;
+>>>>>>> Stashed changes
     }
 }

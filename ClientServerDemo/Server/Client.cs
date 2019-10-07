@@ -70,12 +70,8 @@ namespace ClientServerDemo
                     }
                     Write("login\r\nniet ok\r\n\r\n");
 
-                    break; 
-               
-                case "broadcast":
-                    program.Broadcast(this, data[1]);
                     break;
-                case "vr":
+                case "hart":
                     Console.WriteLine(data[1]);
                     break;
                     // hier komt de vr data binnen
