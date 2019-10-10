@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net.Sockets;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -8,128 +10,68 @@ namespace ClientServerDemo
 {
     class Server
     {
-        // TODO: Ombouwen naar het asynchroon afhandelen van clients en doktersapplicaties (TcpListener en aparte threads)
-
         private TcpClient tcpClient;
+        private Program program;
         private NetworkStream stream;
 
         private byte[] buffer = new byte[1024];
 
         string totalBuffer = "";
 
-        public string login { get; set;  }
+        public string login { get; set; }
 
-        public string password { get; set; }
-
-        public Server(TcpClient tcpClient)
+        public Server(TcpClient tcpClient, Program program)
         {
             this.tcpClient = tcpClient;
+            this.program = program;
+
             this.stream = tcpClient.GetStream();
+            stream.BeginRead(buffer, 0, buffer.Length, new AsyncCallback(OnRead), null);
+        }
+
+        private void OnRead(IAsyncResult ar)
+        {
+            Console.WriteLine("got data");
+            int receivedBytes = stream.EndRead(ar);
+            totalBuffer += System.Text.Encoding.ASCII.GetString(buffer, 0, receivedBytes);
+
+            while (totalBuffer.Contains("\r\n\r\n"))
+            {
+                string packet = totalBuffer.Substring(0, totalBuffer.IndexOf("\r\n\r\n"));
+                totalBuffer = totalBuffer.Substring(totalBuffer.IndexOf("\r\n\r\n") + 4);
+
+                string[] data = Regex.Split(packet, "\r\n");
+                handlePacket(data);
+            }
+
+            stream.BeginRead(buffer, 0, buffer.Length, new AsyncCallback(OnRead), null);
+
         }
 
         private void handlePacket(string[] data)
         {
-            switch(data[0])
+            switch (data[0])
             {
                 case "login":
-
-                    foreach(Tuple<string, string> c in Program.accounts)
-                    {
-                        if(c.Item1 == data[1] && c.Item2 == data[2])
-                        {
-                            this.password = c.Item2;
-                            this.login = c.Item1;
-
-                            Send("login\r\nok");
-                            break; 
-                        }
-                    }
-                    Send("login\r\nniet ok");
-                    break;         
-                case "broadcast":
-                    Program.Broadcast(this, data[1]);
+                    this.login = data[1];
                     break;
                 case "hart":
                     Console.WriteLine(data[1]);
                     break;
-                case "fiets":
+                case "bike":
                     Console.WriteLine(data[1]);
-                    break; 
+                    break;
                 default:
-                    Send("Dat snap ik niet");
+                    Write("Dat snap ik niet\r\n\r\n");
                     Console.WriteLine("Unknown packet");
                     break;
             }
         }
 
-        public void Send(string value)
+        public void Write(string v)
         {
-            byte[] packetLengthBytes = BitConverter.GetBytes(value.Length);
-            byte[] dataBytes = Encoding.UTF8.GetBytes(value);
-
-            WriteToStream(packetLengthBytes);
-            WriteToStream(dataBytes);
-
-            byte[] packetLengthData = ReadFromStream(4);
-            int packetLength = BitConverter.ToInt32(packetLengthData, 0);
-
-            byte[] data = ReadFromStream(packetLength);
-            string responseDataRaw = Encoding.UTF8.GetString(data);
-            
-            if (responseDataRaw.Contains("\r\n"))
-                handlePacket(Regex.Split(responseDataRaw, "\r\n"));
+            stream.Write(System.Text.Encoding.ASCII.GetBytes(v), 0, v.Length);
+            stream.Flush();
         }
-
-        public byte[] ReadFromStream(int packetLength)
-        {
-            try
-            {
-                byte[] receivedBuff = new byte[packetLength];
-                int readPosition = 0;
-
-                while (readPosition < packetLength)
-                {
-                    readPosition += stream.Read(receivedBuff, readPosition, packetLength - readPosition);
-                }
-                return receivedBuff;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Error!\n" + ex.Message + "\n" + ex.StackTrace);
-                return null;
-            }
-        }
-
-        private async void WriteToStream(byte[] value)
-        {
-            try
-            {
-                await stream.WriteAsync(value, 0, value.Length);
-                await stream.FlushAsync();
-            }
-            catch (Exception) { }
-        }
-
-        //public async void ReadFromStream()
-        //{
-        //    try
-        //    {
-        //        Console.WriteLine("Data received");
-        //        int receivedBytes = await stream.ReadAsync();
-        //        totalBuffer += System.Text.Encoding.ASCII.GetString(buffer, 0, receivedBytes);
-
-        //        while (totalBuffer.Contains("\r\n\r\n"))
-        //        {
-        //            string packet = totalBuffer.Substring(0, totalBuffer.IndexOf("\r\n\r\n"));
-        //            totalBuffer = totalBuffer.Substring(totalBuffer.IndexOf("\r\n\r\n") + 4);
-
-        //            string[] data = Regex.Split(packet, "\r\n");
-        //            handlePacket(data);
-        //        }
-
-        //        stream.BeginRead(buffer, 0, buffer.Length, new AsyncCallback(OnRead), null);
-        //    }
-        //    catch (Exception) { }
-        //}
     }
 }

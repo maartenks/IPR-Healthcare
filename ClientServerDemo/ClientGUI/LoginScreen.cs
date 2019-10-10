@@ -116,9 +116,9 @@ namespace ClientGUI
 
         }
 
-        private static void WriteBike(string v)
+        private static void WriteBike(string v, int sec)
         {
-            Write($"fiets\r\n{v}\r\n\r\n");
+            Write($"fiets\r\n{v}\r\n{sec}\r\n");
         }
 
         private static void WriteHeart(string v)
@@ -150,28 +150,28 @@ namespace ClientGUI
             if (timePassed.Text == "04:00") { HoldFrequency(); intensive = true; }
             if (timePassed.Text == "06:00") { CoolingDown(); intensive = false; }
             if (timePassed.Text == "07:00") { time.Stop(); }
-//            if (totalSeconds % 10 == 0) { await bleBikeHandler.DataAsync(); WriteBike(bleBikeHandler.sendData()); }
-//            SendData();
+//            if (totalSeconds % 10 == 0) { await bleBikeHandler.DataAsync(); WriteBike(bleBikeHandler.sendData(), totalSeconds); }
+           SendData();
 
         }
 
         private async void SendData()
         {
-            await bleHeartHandler.DataAsync();
+   //         await bleHeartHandler.DataAsync();
             if (intensive)
             {
                 if (totalSeconds % 15 == 0)
                 {
-                    WriteHeart(bleHeartHandler.sendData());
+                   WriteHeart("DATA RECEIVED");
                 } 
             } else if (totalSeconds % 60 == 0 )
             {
-                WriteHeart(bleHeartHandler.sendData());
+                WriteHeart("DATA RECEIVED");
             }
         }
 
 
-        private static void OnRead(IAsyncResult ar)
+        private void OnRead(IAsyncResult ar)
         {
             //message received
             Console.WriteLine("got data");
@@ -194,14 +194,16 @@ namespace ClientGUI
 
         }
 
-        private static void handlePacket(string[] data)
+        private void handlePacket(string[] data)
         {
             switch (data[0])
             {
                 case "login":
                     Console.WriteLine($"Je bent ingelogd: {data[1]}");
                     break;
-                case "fiets":
+                case "weerstand":
+                    Console.WriteLine($"Nieuwe weerstand ontvangen: {data[1]}");
+                    bleBikeHandler.ChangeResistance(Int32.Parse(data[1]));
                     break;
                 default:
                     Console.WriteLine("Onbekend pakketje");
