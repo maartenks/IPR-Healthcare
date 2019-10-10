@@ -35,6 +35,10 @@ namespace ClientGUI
         static string totalBuffer = "";
         private int seconds = 0;
         private int minutes = 0;
+        private int phase = 0;
+        private int phaseTime = 120;
+        private int phaseTimeMin;
+        private int phaseTimeSec;
         private int totalSeconds = 0;
         private bool intensive = false;
 
@@ -57,6 +61,12 @@ namespace ClientGUI
         {
             this.bleBikeList = await this.bleBikeHandler.RetrieveBleBikes("Tacx");
             this.bleBikeList.ForEach(x => selectBike.Items.Add(x));
+            comboGender.Items.Add("Man");
+            comboGender.Items.Add("Vrouw");
+            for (int i = 15; i < 75; i++)
+            {
+                comboAge.Items.Add(i.ToString());
+            }
         }
         private bool PatientExist(string patientID)
         {
@@ -77,6 +87,7 @@ namespace ClientGUI
                 login.Enabled = false;
                 startSession.Enabled = true;
                 PreInstructions();
+                WritePatient();
                 //               }
             }
 
@@ -116,6 +127,11 @@ namespace ClientGUI
 
         }
 
+        private void WritePatient()
+        {
+            Write($"patient\r\n{name.Text}\r\n{comboGender.Text}\r\n{comboAge.Text}\r\n{selectBike.Text}\r\n\r\n");
+        }
+
         private static void WriteBike(string v, int sec)
         {
             Write($"fiets\r\n{v}\r\n{sec}\r\n");
@@ -133,7 +149,7 @@ namespace ClientGUI
 
         private void Initialize_Timer()
         {
-            if (timePassed.Text == "00:00") { WarmingUp(); }
+            if (timePassed.Text == "00:00") { WarmingUp(); phase++; }
             time.Interval = 100;
             time.Tick += new EventHandler(Timertick);
             time.Start();
@@ -142,17 +158,83 @@ namespace ClientGUI
         private async void Timertick(object sender, EventArgs e)
         {
             totalSeconds++;
+            phaseTime--;
+            this.phaseTimeMin = phaseTime / 60;
+            this.phaseTimeSec = phaseTime & 60;
             this.seconds = totalSeconds % 60;
             this.minutes = totalSeconds / 60;
-            if (this.seconds < 10) { timePassed.Text = "0" + this.minutes + ":0" + this.seconds; }
-            else { timePassed.Text = "0" + this.minutes + ":" + this.seconds; }
-            if (timePassed.Text == "02:00") { OnLevel(); }
-            if (timePassed.Text == "04:00") { HoldFrequency(); intensive = true; }
-            if (timePassed.Text == "06:00") { CoolingDown(); intensive = false; }
-            if (timePassed.Text == "07:00") { time.Stop(); }
-//            if (totalSeconds % 10 == 0) { await bleBikeHandler.DataAsync(); WriteBike(bleBikeHandler.sendData(), totalSeconds); }
-           SendData();
+            if (this.phaseTimeSec < 10) {
+                realtimePhaseTime.Text = "0" + this.phaseTimeMin + ":0" + this.phaseTimeSec;
+            }
+            else if (this.phaseTimeSec == 60)
+            {
+                realtimePhaseTime.Text = "0" + this.phaseTimeMin + ":00";
+            }
+            else
+            {
+                realtimePhaseTime.Text = "0" + this.phaseTimeMin + ":" + this.phaseTimeSec;
+            }
+            if (this.seconds < 10)
+            {
+                timePassed.Text = "0" + this.minutes + ":0" + this.seconds;
+            }
+            else
+            {
+                timePassed.Text = "0" + this.minutes + ":" + this.seconds;
+            }
+            if (timePassed.Text == "02:00")
+            {
+                OnLevel(); phaseTime = 120; phase++;
+            }
+            if (timePassed.Text == "04:00")
+            {
+                HoldFrequency(); intensive = true; phaseTime = 120; phase++; //            ChangeResistance();
+            }
+            if (timePassed.Text == "06:00")
+            {
+                CoolingDown(); intensive = false; phaseTime = 60; phase++; //            ChangeResistance();
+            }
+                if (timePassed.Text == "07:00")
+            {
+                time.Stop(); phaseTime = 60;
+            }
+            realtimePhase.Text = phase.ToString();
 
+            //            if (totalSeconds % 10 == 0) { await bleBikeHandler.DataAsync(); WriteBike(bleBikeHandler.sendData(), totalSeconds); }
+ //           CheckRPM(Int32.Parse(bleBikeHandler.sendData()));
+ //           realtimeRPM.Text = bleBikeHandler.sendData();
+ //           realtimeHF.Text = bleHeartHandler.sendData();
+ //           realtimeResistance.Text = ChangeResistance();
+//            SendData();
+//            MaxHeartFrequencyHit();
+    
+        }
+
+        private void StopSession()
+        {
+            time.Stop();
+            steadyStateMessage.Text = "De sessie is gestopt en wordt afgebroken.";
+        }
+        private void MaxHeartFrequencyHit()
+        {
+            if (Int32.Parse(comboAge.Text) > 14 && Int32.Parse(comboAge.Text) < 24 ) { if (Int32.Parse(bleHeartHandler.sendData()) > 210) StopSession(); }
+            if (Int32.Parse(comboAge.Text) > 25 && Int32.Parse(comboAge.Text) < 34) { if (Int32.Parse(bleHeartHandler.sendData()) > 200) StopSession(); }
+            if (Int32.Parse(comboAge.Text) > 35 && Int32.Parse(comboAge.Text) < 44) { if (Int32.Parse(bleHeartHandler.sendData()) > 190) StopSession(); }
+            if (Int32.Parse(comboAge.Text) > 45 && Int32.Parse(comboAge.Text) < 54) { if (Int32.Parse(bleHeartHandler.sendData()) > 180) StopSession(); }
+            if (Int32.Parse(comboAge.Text) > 55) { if (Int32.Parse(bleHeartHandler.sendData()) > 170) StopSession(); }
+        }
+
+        private void CheckRPM(int RPM)
+        {
+            if (RPM < 50) {
+                rotationMessage.Text = "U fietst te langzaam. Verhoog uw snelheid";
+            } else if (RPM > 60)
+            {
+                rotationMessage.Text = "U fietst te snel. Verlaag uw snelheid";
+            } else if (RPM > 50 && RPM <60)
+            {
+                rotationMessage.Text = "U fietst een goede snelheid. Hou dit tempo aan.";
+            }
         }
 
         private async void SendData()
@@ -163,11 +245,19 @@ namespace ClientGUI
                 if (totalSeconds % 15 == 0)
                 {
                    WriteHeart("DATA RECEIVED");
+                    realtimeGemHF.Text = bleHeartHandler.sendData();
                 } 
             } else if (totalSeconds % 60 == 0 )
             {
                 WriteHeart("DATA RECEIVED");
+                realtimeGemHF.Text = bleHeartHandler.sendData();
             }
+        }
+
+        private string ChangeResistance()
+        {
+            int i = 0;
+            return i.ToString();
         }
 
 
@@ -243,6 +333,9 @@ namespace ClientGUI
             instructions.AppendText("De weerstand wordt gedurende een minuut afgebouwd.");
         }
 
-       
+        private void StopSession_Click(object sender, EventArgs e)
+        {
+            StopSession();
+        }
     }
 }

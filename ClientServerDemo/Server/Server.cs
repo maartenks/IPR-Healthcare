@@ -61,6 +61,9 @@ namespace ClientServerDemo
                 case "bike":
                     Console.WriteLine(data[1]);
                     break;
+                case "patient":
+                    Console.WriteLine("Naam: " + data[1] + "\r\nGeslacht: " + data[2] + "\r\nLeeftijd: " + data[3] + "\r\nFietsID: " + data[4]);
+                    break;
                 default:
                     Write("Dat snap ik niet\r\n\r\n");
                     Console.WriteLine("Unknown packet");

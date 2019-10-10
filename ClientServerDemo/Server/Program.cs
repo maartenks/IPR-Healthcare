@@ -43,12 +43,9 @@ namespace ClientServerDemo
 
 
 
-        public void Broadcast()
+        public void SendMessage(Server client, string v)
         {
-            foreach (var s in servers)
-            {
-
-            }
+            client.Write($"Resistance\r\n{v}\r\n\r\n");
 
         }
     }
