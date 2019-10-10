@@ -28,7 +28,6 @@ namespace ClientGUI
         private bool started;
 
         private int port;
-        private string patient;
         private TcpClient client;
         private static NetworkStream stream;
         private static byte[] buffer = new byte[1024];
@@ -68,10 +67,6 @@ namespace ClientGUI
                 comboAge.Items.Add(i.ToString());
             }
         }
-        private bool PatientExist(string patientID)
-        {
-            return true;
-        }
 
 
 
@@ -81,7 +76,6 @@ namespace ClientGUI
                 //           {
                 //               bleHeartHandler.Connect("Decathlon Dual HR", "Heartrate");
                 //               bleBikeHandler.Connect(selectBike.SelectedItem.ToString(), "6e40fec1-b5a3-f393-e0a9-e50e24dcca9e");
-                this.patient = name.Text;
                 ConnectServer();
                 name.Enabled = false;
                 login.Enabled = false;
@@ -91,25 +85,6 @@ namespace ClientGUI
                 //               }
             }
 
-        private void Name_Enter(object sender, EventArgs e)
-        {
-            if (name.Text == "Naam")
-            {
-                name.Text = "";
-
-                name.ForeColor = Color.Black;
-            }
-        }
-
-        private void Name_Leave(object sender, EventArgs e)
-        {
-            if (name.Text == "")
-            {
-                name.Text = "Naam";
-                name.ForeColor = Color.Silver;
-            }
-        }
-
         private void ConnectServer()
         {
             client = new TcpClient();
@@ -118,23 +93,6 @@ namespace ClientGUI
             stream = client.GetStream();
             stream.BeginRead(buffer, 0, buffer.Length, new AsyncCallback(OnRead), null);
 
-        }
-
-        private static void Write(string v)
-        {
-            stream.Write(System.Text.Encoding.ASCII.GetBytes(v), 0, v.Length);
-            stream.Flush();
-
-        }
-
-        private void WritePatient()
-        {
-            Write($"patient\r\n{name.Text}\r\n{comboGender.Text}\r\n{comboAge.Text}\r\n{selectBike.Text}\r\n\r\n");
-        }
-
-        private static void WriteBike(string v, int sec)
-        {
-            Write($"fiets\r\n{v}\r\n{sec}\r\n");
         }
 
         private static void WriteHeart(string v)
@@ -253,7 +211,6 @@ namespace ClientGUI
                 realtimeGemHF.Text = bleHeartHandler.sendData();
             }
         }
-
         private string ChangeResistance()
         {
             int i = 0;
@@ -302,6 +259,23 @@ namespace ClientGUI
 
         }
 
+        private static void Write(string v)
+        {
+            stream.Write(System.Text.Encoding.ASCII.GetBytes(v), 0, v.Length);
+            stream.Flush();
+
+        }
+
+        private void WritePatient()
+        {
+            Write($"patient\r\n{name.Text}\r\n{comboGender.Text}\r\n{comboAge.Text}\r\n{selectBike.Text}\r\n\r\n");
+        }
+
+        private static void WriteBike(string v, int sec)
+        {
+            Write($"fiets\r\n{v}\r\n{sec}\r\n");
+        }
+
         private void PreInstructions()
         {
             instructions.AppendText("De patiënt doet een hartslagband om en neemt plaats op de fiets. Stel het zadel op de juiste hoogte in, zodanig dat in de laagste stand van het pedaal, de knie zeer licht is gebogen (170o). ");
@@ -336,6 +310,25 @@ namespace ClientGUI
         private void StopSession_Click(object sender, EventArgs e)
         {
             StopSession();
+        }
+
+        private void Name_Enter(object sender, EventArgs e)
+        {
+            if (name.Text == "Naam")
+            {
+                name.Text = "";
+
+                name.ForeColor = Color.Black;
+            }
+        }
+
+        private void Name_Leave(object sender, EventArgs e)
+        {
+            if (name.Text == "")
+            {
+                name.Text = "Naam";
+                name.ForeColor = Color.Silver;
+            }
         }
     }
 }
