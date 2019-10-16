@@ -9,7 +9,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using Newtonsoft.Json;
 
 namespace Doctor
 {
@@ -23,6 +23,7 @@ namespace Doctor
         private int port;
         private static NetworkStream stream;
         static string totalBuffer = "";
+        private List<Patient> patients = new List<Patient>();
 
         private String broadcastMessage { get; set; }
 
@@ -83,6 +84,15 @@ namespace Doctor
                 case "weerstand":
                     Console.WriteLine($"Nieuwe weerstand ontvangen: {data[1]}");
                    // bleBikeHandler.ChangeResistance(Int32.Parse(data[1]));
+                    break;
+                case "patientData":
+                    if (patients.Find(pat => pat.Name == data[1]) != null)
+                    {
+                        patients.Find(pat => pat == JsonConvert.DeserializeObject<Patient>(data[2]));
+                    } else
+                    {
+                        patients.Add(JsonConvert.DeserializeObject<Patient>(data[2]));
+                    }
                     break;
                 default:
                     Console.WriteLine("Onbekend pakketje");

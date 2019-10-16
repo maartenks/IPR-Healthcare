@@ -47,6 +47,13 @@ namespace ClientServerDemo
         }
 
 
+        public void WriteDoctor(string name, string v)
+        {
+            foreach (Server s in servers)
+            {
+                s.Write($"patientData\r\n{name}\r\n{s}\r\n\r\n");
+            }
+        }
 
         public void SendMessage(Server client, string v)
         {

@@ -13,6 +13,7 @@ using ClientGUI.Utils;
 using System.Threading;
 using System.Net.Sockets;
 using System.Text.RegularExpressions;
+using Newtonsoft.Json;
 
 namespace ClientGUI
 {
@@ -26,6 +27,7 @@ namespace ClientGUI
         private List<string> bleBikeList;
         private List<string> bleHeartList;
         private bool started;
+        private Patient patient;
 
         private int port;
         private TcpClient client;
@@ -81,7 +83,7 @@ namespace ClientGUI
                 login.Enabled = false;
                 startSession.Enabled = true;
                 PreInstructions();
-                WritePatient();
+                MakePatient();
                 //               }
             }
 
@@ -100,6 +102,11 @@ namespace ClientGUI
             Write($"hart\r\n{v}\r\n\r\n");
         }
 
+        private static void WritePatient(string name, string v)
+        {
+            Write($"patient\r\n{name}\r\n{v}\r\n\r\n");
+        }
+
         private void StartSession_Click(object sender, EventArgs e)
         {
             Initialize_Timer();
@@ -113,8 +120,32 @@ namespace ClientGUI
             time.Start();
         }
 
+        private void MakePatient()
+        {
+            patient = new Patient(
+               name.Text,
+               Int32.Parse(comboAge.Text),
+               comboGender.Text,
+               Int32.Parse(textWeight.Text),
+               selectBike.Text
+                );
+
+        }
+
+        private void UpdatePatient()
+        {
+            patient.heartbeat.Add(Int32.Parse(bleHeartHandler.sendData()));
+            patient.rotationPerMinute.Add(Int32.Parse(bleBikeHandler.sendData()));
+            if (patient.maxheartbeat < Int32.Parse(bleHeartHandler.sendData()))
+            {
+                patient.maxheartbeat = Int32.Parse(bleHeartHandler.sendData());
+            }
+            WritePatient(name.Text, JsonConvert.SerializeObject(patient));
+        }
+
         private async void Timertick(object sender, EventArgs e)
         {
+//          UpdatePatient();
             totalSeconds++;
             phaseTime--;
             this.phaseTimeMin = phaseTime / 60;
@@ -264,11 +295,6 @@ namespace ClientGUI
             stream.Write(System.Text.Encoding.ASCII.GetBytes(v), 0, v.Length);
             stream.Flush();
 
-        }
-
-        private void WritePatient()
-        {
-            Write($"patient\r\n{name.Text}\r\n{comboGender.Text}\r\n{comboAge.Text}\r\n{selectBike.Text}\r\n\r\n");
         }
 
         private static void WriteBike(string v, int sec)

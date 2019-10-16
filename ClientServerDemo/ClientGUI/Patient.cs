@@ -6,16 +6,42 @@ using System.Threading.Tasks;
 
 namespace ClientGUI
 {
-    class Patient
+    public class Patient
     {
-
-        private string name;
-        private string patientID;
-
-        public Patient(string name, string patientID)
+        public Patient(string name, int age, string gender, int weight, string fietsId)
         {
-            this.name = name;
-            this.patientID = patientID;
+            Name = name;
+            Age = age;
+            Gender = gender;
+            Bpm = 0;
+            FietsId = fietsId;
+            workload = new List<double>();
+            heartbeat = new List<double>();
+            
+            maxheartbeat = 0;
+        }
+        public List<double> workload;
+
+        public List<double> heartbeat;
+
+        public double maxheartbeat;
+
+        public String Name { get; private set; }
+
+        public int Age { get; set; }
+
+        public String Gender { get; set; }
+
+        public int Bpm { get; set; }
+
+        public String FietsId { get; set; }
+
+        public List<double> rotationPerMinute { get; set; }
+
+
+        public String toString()
+        {
+            return $"{Name} - {FietsId} ";
         }
     }
 }

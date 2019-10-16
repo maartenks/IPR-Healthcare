@@ -8,7 +8,7 @@ namespace Doctor
 {
     public class Patient
     {
-        public Patient(string name, int age, string gender, string fietsId)
+        public Patient(string name, int age, string gender, int weight, string fietsId)
         {
             Name = name;
             Age = age;
@@ -17,8 +17,8 @@ namespace Doctor
             FietsId = fietsId;
             workload = new List<double>();
             heartbeat = new List<double>();
+
             maxheartbeat = 0;
-            this.history = new List<History>(); 
         }
         public List<double> workload;
 
@@ -26,7 +26,6 @@ namespace Doctor
 
         public double maxheartbeat;
 
-        public List<History> history; 
         public String Name { get; private set; }
 
         public int Age { get; set; }
@@ -37,10 +36,12 @@ namespace Doctor
 
         public String FietsId { get; set; }
 
+        public List<double> rotationPerMinute { get; set; }
+
 
         public String toString()
         {
-            return $"{Name} - {FietsId} " ;
+            return $"{Name} - {FietsId} ";
         }
     }
 }
