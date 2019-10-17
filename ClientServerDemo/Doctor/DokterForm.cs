@@ -267,7 +267,7 @@ namespace Doctor
 
         private void Save_Click(object sender, EventArgs e)
         {
-            string json = JsonConvert.SerializeObject(patients);
+            string json = JsonConvert.SerializeObject(this.patients);
             Write("stop\r\n" + json + "\r\n\r\n");
         }
     }
