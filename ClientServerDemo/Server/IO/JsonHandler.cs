@@ -23,8 +23,10 @@ namespace Server.IO
 
         public static async void SaveFile(string filename, string content)
         {
+            System.Console.WriteLine("hi");
             string saveFolder = Directory.GetCurrentDirectory();
             string savePath = Path.Combine(saveFolder, filename);
+            System.Console.WriteLine(savePath);
             await Task.Run(() => File.WriteAllText(savePath, content));
         }
 

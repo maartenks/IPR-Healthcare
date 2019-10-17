@@ -26,3 +26,17 @@ C:\Users\maart\OneDrive\Documenten\Proftaak Weerstation\weerstation\IPR-Healthca
 C:\Users\maart\OneDrive\Documenten\Proftaak Weerstation\weerstation\IPR-Healthcare\ClientServerDemo\ClientGUI\obj\Debug\ClientGUI.csproj.CopyComplete
 C:\Users\maart\OneDrive\Documenten\Proftaak Weerstation\weerstation\IPR-Healthcare\ClientServerDemo\ClientGUI\obj\Debug\ClientGUI.exe
 C:\Users\maart\OneDrive\Documenten\Proftaak Weerstation\weerstation\IPR-Healthcare\ClientServerDemo\ClientGUI\obj\Debug\ClientGUI.pdb
+C:\Users\joelle\Desktop\youu4\IPR-Healthcare\ClientServerDemo\ClientGUI\bin\Debug\ClientGUI.exe.config
+C:\Users\joelle\Desktop\youu4\IPR-Healthcare\ClientServerDemo\ClientGUI\bin\Debug\ClientGUI.exe
+C:\Users\joelle\Desktop\youu4\IPR-Healthcare\ClientServerDemo\ClientGUI\bin\Debug\ClientGUI.pdb
+C:\Users\joelle\Desktop\youu4\IPR-Healthcare\ClientServerDemo\ClientGUI\bin\Debug\BLELibrary.dll
+C:\Users\joelle\Desktop\youu4\IPR-Healthcare\ClientServerDemo\ClientGUI\bin\Debug\Newtonsoft.Json.dll
+C:\Users\joelle\Desktop\youu4\IPR-Healthcare\ClientServerDemo\ClientGUI\bin\Debug\Newtonsoft.Json.xml
+C:\Users\joelle\Desktop\youu4\IPR-Healthcare\ClientServerDemo\ClientGUI\obj\Debug\ClientGUI.csprojAssemblyReference.cache
+C:\Users\joelle\Desktop\youu4\IPR-Healthcare\ClientServerDemo\ClientGUI\obj\Debug\ClientGUI.LoginScreen.resources
+C:\Users\joelle\Desktop\youu4\IPR-Healthcare\ClientServerDemo\ClientGUI\obj\Debug\ClientGUI.Properties.Resources.resources
+C:\Users\joelle\Desktop\youu4\IPR-Healthcare\ClientServerDemo\ClientGUI\obj\Debug\ClientGUI.csproj.GenerateResource.cache
+C:\Users\joelle\Desktop\youu4\IPR-Healthcare\ClientServerDemo\ClientGUI\obj\Debug\ClientGUI.csproj.CoreCompileInputs.cache
+C:\Users\joelle\Desktop\youu4\IPR-Healthcare\ClientServerDemo\ClientGUI\obj\Debug\ClientGUI.csproj.CopyComplete
+C:\Users\joelle\Desktop\youu4\IPR-Healthcare\ClientServerDemo\ClientGUI\obj\Debug\ClientGUI.exe
+C:\Users\joelle\Desktop\youu4\IPR-Healthcare\ClientServerDemo\ClientGUI\obj\Debug\ClientGUI.pdb

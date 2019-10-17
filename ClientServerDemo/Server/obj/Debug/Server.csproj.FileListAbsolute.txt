@@ -15,3 +15,13 @@ C:\Users\maart\OneDrive\Documenten\Proftaak Weerstation\weerstation\IPR-Healthca
 C:\Users\maart\OneDrive\Documenten\Proftaak Weerstation\weerstation\IPR-Healthcare\ClientServerDemo\Server\bin\Debug\Newtonsoft.Json.dll
 C:\Users\maart\OneDrive\Documenten\Proftaak Weerstation\weerstation\IPR-Healthcare\ClientServerDemo\Server\bin\Debug\Newtonsoft.Json.xml
 C:\Users\maart\OneDrive\Documenten\Proftaak Weerstation\weerstation\IPR-Healthcare\ClientServerDemo\Server\obj\Debug\Server.csproj.CopyComplete
+C:\Users\joelle\Desktop\youu4\IPR-Healthcare\ClientServerDemo\Server\bin\Debug\Server.exe.config
+C:\Users\joelle\Desktop\youu4\IPR-Healthcare\ClientServerDemo\Server\bin\Debug\Server.exe
+C:\Users\joelle\Desktop\youu4\IPR-Healthcare\ClientServerDemo\Server\bin\Debug\Server.pdb
+C:\Users\joelle\Desktop\youu4\IPR-Healthcare\ClientServerDemo\Server\bin\Debug\Newtonsoft.Json.dll
+C:\Users\joelle\Desktop\youu4\IPR-Healthcare\ClientServerDemo\Server\bin\Debug\Newtonsoft.Json.xml
+C:\Users\joelle\Desktop\youu4\IPR-Healthcare\ClientServerDemo\Server\obj\Debug\Server.csprojAssemblyReference.cache
+C:\Users\joelle\Desktop\youu4\IPR-Healthcare\ClientServerDemo\Server\obj\Debug\Server.csproj.CoreCompileInputs.cache
+C:\Users\joelle\Desktop\youu4\IPR-Healthcare\ClientServerDemo\Server\obj\Debug\Server.csproj.CopyComplete
+C:\Users\joelle\Desktop\youu4\IPR-Healthcare\ClientServerDemo\Server\obj\Debug\Server.exe
+C:\Users\joelle\Desktop\youu4\IPR-Healthcare\ClientServerDemo\Server\obj\Debug\Server.pdb

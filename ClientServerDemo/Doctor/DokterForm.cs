@@ -34,9 +34,19 @@ namespace Doctor
             this.port = 80; 
             selectedPatients = new List<Patient>();
             availablePatients = new List<Patient>();
-            ConnectServer(); 
-    
-            testDataAvailablePatients();
+            this.patients.Add(new Patient("lili", 5 , "male", 65, "5"));
+            ConnectServer();
+
+            // testDataAvailablePatients();
+            foreach (Patient now in patients) {
+
+                availableListBox.Items.Add(now.Name);
+                allHistroy.Items.Add("now");
+                foreach(History then in now.histories)
+                {
+                    allHistroy.Items.Add(then.workload);
+                }
+              }
 
 
 
@@ -253,6 +263,12 @@ namespace Doctor
             // Determine if text has changed in the textbox by comparing to original text.
             string json = JsonConvert.SerializeObject(patients);
             Write("stop\r\n" + json + "\r\n\r\n"); 
+        }
+
+        private void Save_Click(object sender, EventArgs e)
+        {
+            string json = JsonConvert.SerializeObject(patients);
+            Write("stop\r\n" + json + "\r\n\r\n");
         }
     }
 

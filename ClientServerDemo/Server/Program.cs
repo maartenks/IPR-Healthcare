@@ -38,6 +38,7 @@ namespace ClientServerDemo
             //List<Patient> patients = await LoadClients();
             //List<object> list = clientCollection.clients.ToList<object>();
             //list.Add(client);
+            Console.WriteLine("hey");
             patients.ToArray();
             string output = JsonConvert.SerializeObject(patients);
             JsonHandler.SaveFile("PatientData.json", output);
@@ -61,9 +62,10 @@ namespace ClientServerDemo
         Program()
         {
             // make a host and start host
-            var mytask = LoadClients();
-            patients = mytask.Result;
-            delete();
+            //var mytask = LoadClients();
+           // patients = mytask.Result;
+           
+            //delete();
             listener = new TcpListener(IPAddress.Any, 80);
             listener.Start();
 
@@ -74,6 +76,7 @@ namespace ClientServerDemo
 
         public void save(List<Patient> patients)
         {
+            Console.WriteLine("hello");
             foreach(Patient now in patients) {
                 foreach(Patient then in this.patients)
                 {
@@ -93,6 +96,7 @@ namespace ClientServerDemo
                     }
                 }
             }
+            this.patients.Add(new Patient("lili", 5, "male", 65, "5"));
             ToevoegenAsync(this.patients); 
 
         }
