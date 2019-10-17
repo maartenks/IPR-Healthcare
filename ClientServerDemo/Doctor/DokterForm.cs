@@ -203,12 +203,12 @@ namespace Doctor
 
         private void testDataAvailablePatients()
         {
-            availablePatients.Add(new Patient("Pascal", 20, "Man", "0000"));
+            /*availablePatients.Add(new Patient("Pascal", 20, "Man", "0000"));
             availablePatients.Add(new Patient("Maarten", 20, "Man", "0000"));
             availablePatients.Add(new Patient("Thijs", 21, "Man", "0000"));
             availablePatients.Add(new Patient("Joelle", 20, "Vrouw", "0000"));
             availablePatients.Add(new Patient("Marleen", 20, "Vrouw", "0000"));
-            availablePatients.Add(new Patient("Kirsten", 20, "Vrouw", "0000"));
+            availablePatients.Add(new Patient("Kirsten", 20, "Vrouw", "0000"));*/
 
 
         }
@@ -246,6 +246,13 @@ namespace Doctor
         private void AllHistroy_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void Form1_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            // Determine if text has changed in the textbox by comparing to original text.
+            string json = JsonConvert.SerializeObject(patients);
+            Write("stop\r\n" + json + "\r\n\r\n"); 
         }
     }
 

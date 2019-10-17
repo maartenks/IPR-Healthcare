@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Doctor;
+using Newtonsoft.Json;
 using Server.IO.Data;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,35 +10,35 @@ namespace Server.IO
     public class ClientDataSaver
     {
         // Allemaal netjes asynchroon :))))
-        public async Task<ClientCollection> LoadClients()
+        public async Task<List<Patient>> LoadClients()
         {
             // Ik ga er hiervan uit dat de data in de clientData.json alleen bestaat uit een json array (JArray) met client objecten.
             // In de file staat een voorbeeldje.
-            return await JsonHandler.LoadObject<ClientCollection>("clientData.json");
+            return await JsonHandler.LoadObject<List<Patient>>("PatientData.json");
         }
 
         public async Task ToevoegenAsync(Client client)
         {
-            ClientCollection clientCollection = await LoadClients();
-            List<object> list = clientCollection.clients.ToList<object>();
-            list.Add(client);
-            list.ToArray();
-            string output = JsonConvert.SerializeObject(list);
+            List<Patient> patients = await LoadClients();
+            //List<object> list = clientCollection.clients.ToList<object>();
+            //list.Add(client);
+            patients.ToArray();
+            string output = JsonConvert.SerializeObject(patients);
             JsonHandler.SaveFile("this", output);
         }
 
         public async Task VerwijderenAsync(Client client)
         {
-            ClientCollection clientCollection = await LoadClients();
-            clientCollection.clients.Where(x => x.Id == client.Id).First();
-            string output = JsonConvert.SerializeObject(clientCollection.clients);
-            JsonHandler.SaveFile("this", output);
+           // ClientCollection clientCollection = await LoadClients();
+           // clientCollection.clients.Where(x => x.Id == client.Id).First();
+           // string output = JsonConvert.SerializeObject(clientCollection.clients);
+           // JsonHandler.SaveFile("this", output);
         }
 
         public async Task AanpassenAsync(Client client1, Client client2)
         {
-            ClientCollection clientCollection = await LoadClients();
-            List<Client> list = clientCollection.clients.ToList<Client>();
+           // ClientCollection clientCollection = await LoadClients();
+           /* List<Client> list = clientCollection.clients.ToList<Client>();
             for (int i = 0; i < list.Count; i++)
             {
                 if (list[i].Equals(client1))
@@ -45,7 +46,7 @@ namespace Server.IO
             }
             list.ToArray();
             string output = JsonConvert.SerializeObject(list);
-            JsonHandler.SaveFile("this", output);
+            JsonHandler.SaveFile("this", output);*/
         }
 
         /*  

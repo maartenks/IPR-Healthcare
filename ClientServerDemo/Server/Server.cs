@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Doctor;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Sockets;
@@ -63,6 +65,9 @@ namespace ClientServerDemo
                     break;
                 case "patient":
                     program.WriteDoctor(data[1], data[2]);
+                    break;
+                case "stop":
+                    program.save(JsonConvert.DeserializeObject<List<Patient>>(data[1]));
                     break;
                 default:
                     Write("Dat snap ik niet\r\n\r\n");

@@ -17,7 +17,7 @@ namespace Doctor
             FietsId = fietsId;
             workload = new List<double>();
             heartbeat = new List<double>();
-
+            this.histories = new List<History>(); 
             maxheartbeat = 0;
         }
         public List<double> workload;
@@ -26,6 +26,7 @@ namespace Doctor
 
         public double maxheartbeat;
 
+        public List<History> histories; 
         public String Name { get; private set; }
 
         public int Age { get; set; }
