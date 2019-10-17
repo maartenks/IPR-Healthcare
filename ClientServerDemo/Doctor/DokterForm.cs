@@ -84,6 +84,17 @@ namespace Doctor
 
 
         }
+
+        private void writechart(Patient patient)
+        { int i = 0;
+            foreach (double hearbeat in patient.heartbeat)
+            {
+                chart1.Series["VO2Now"].Points.AddXY(1, calculateVo2(patient.workload[i], hearbeat, patient) );
+                i++;
+                    
+            }
+            
+        }
         private void handlePacket(string[] data)
         {
             switch (data[0])
