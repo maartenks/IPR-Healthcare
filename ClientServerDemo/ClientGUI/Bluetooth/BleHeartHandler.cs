@@ -32,17 +32,6 @@ namespace ClientGUI.Bluetooth
             });
         }
 
-        public async Task<List<string>> RetrieveBleBikes(string filter)
-        {
-            if (bleHeart == null)
-            {
-                bool completed = await InitBleHeart();
-                if (!completed)
-                    return null;
-            }
-            return bleHeart.ListDevices().Where(x => x.Contains(filter)).ToList();
-        }
-
         public async Task DataAsync()
         {
             int errorCode = 0;
@@ -56,12 +45,9 @@ namespace ClientGUI.Bluetooth
 
         private void BleHeart_SubscriptionValueChanged(object sender, BLESubscriptionValueChangedEventArgs e)
         {
-            byte[] receivedDataSubset = e.Data;
-            if (e.Data.Length == 6)
+            if(e.Data[1] == 8)
             {
-                heartData = $"Heartrate data received: {receivedDataSubset[0]}, {receivedDataSubset[1]}, {receivedDataSubset[2]}, {receivedDataSubset[3]}, {receivedDataSubset[4]}, {receivedDataSubset[5]}";
-                Console.WriteLine($"Heartrate data received: {receivedDataSubset[0]}, {receivedDataSubset[1]}, {receivedDataSubset[2]}, {receivedDataSubset[3]}, {receivedDataSubset[4]}, {receivedDataSubset[5]}");
-                sendData();
+                heartData = $"{e.Data[6]}";
             }
         }
         
@@ -72,21 +58,12 @@ namespace ClientGUI.Bluetooth
 
         public async void Connect(string deviceName, string serviceName)
         {
-            // "Decathlon Dual HR"
-            // "HeartRate"
-            try
-            {
-                int errorCode = await this.bleHeart.OpenDevice(deviceName);
-                errorCode = await this.bleHeart.SetService(serviceName);
+            int errorCode = await this.bleHeart.OpenDevice("Decathlon Dual HR");
+            errorCode = await this.bleHeart.SetService("HeartRate");
 
             // "HeartRateMeasurement"
-            this.bleHeart.SubscriptionValueChanged += (s, e) => SubscriptionValueChanged?.Invoke(e);
-            errorCode = await this.bleHeart.SubscribeToCharacteristic(serviceName);
-            }
-            catch (Exception)
-            {
-
-            }
+            bleHeart.SubscriptionValueChanged += BleHeart_SubscriptionValueChanged;
+            await this.bleHeart.SubscribeToCharacteristic("HeartRateMeasurement");
         }
     }
 }

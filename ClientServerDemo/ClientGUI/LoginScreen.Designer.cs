@@ -293,6 +293,8 @@
             this.textWeight.Size = new System.Drawing.Size(161, 26);
             this.textWeight.TabIndex = 29;
             this.textWeight.Text = "Gewicht in kg";
+            this.textWeight.Enter += new System.EventHandler(this.TextWeight_Enter);
+            this.textWeight.Leave += new System.EventHandler(this.TextWeight_Leave);
             // 
             // rotationMessage
             // 

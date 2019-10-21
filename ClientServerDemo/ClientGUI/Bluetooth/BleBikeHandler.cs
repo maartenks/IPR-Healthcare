@@ -1,5 +1,7 @@
 ﻿using Avans.TI.BLE;
+using ClientGUI.Conversion;
 using ClientGUI.Sim;
+using ClientGUI.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +23,9 @@ namespace ClientGUI.Bluetooth
 
         public event SimEndedHandler SimEnded;
         public delegate void SimEndedHandler();
+        public int errorCode;
+        private PageConversion pageConversion;
+        public int percent;
 
         public async Task<bool> InitBleBike()
         {
@@ -52,70 +57,72 @@ namespace ClientGUI.Bluetooth
 
         public async Task DataAsync()
         {
-            int errorCode = 0;
             errorCode = await bleBike.SetService("6e40fec1-b5a3-f393-e0a9-e50e24dcca9e");
-            // __TODO__ error check
+            bleBike.SubscriptionValueChanged += BleBike_SubscriptionValueChanged;
+            errorCode = await bleBike.SubscribeToCharacteristic("6e40fec2-b5a3-f393-e0a9-e50e24dcca9e");
+        }
 
-            // Subscribe
+        public async void ConnectBike()
+        {
+            errorCode = 0;
+            var services = bleBike.GetServices;
+            foreach (var service in services)
+            {
+                Console.WriteLine($"Service: {service}");
+            }
+
+            errorCode = await bleBike.SetService("6e40fec1-b5a3-f393-e0a9-e50e24dcca9e");
             bleBike.SubscriptionValueChanged += BleBike_SubscriptionValueChanged;
             errorCode = await bleBike.SubscribeToCharacteristic("6e40fec2-b5a3-f393-e0a9-e50e24dcca9e");
         }
 
         private void BleBike_SubscriptionValueChanged(object sender, BLESubscriptionValueChangedEventArgs e)
         {
-            bikeData = $"{e.Data[0]}, {e.Data[1]}, {e.Data[2]}, {e.Data[3]}, {e.Data[4]}, {e.Data[5]}, {e.Data[6]}, {e.Data[7]}, {e.Data[8]}, {e.Data[9]}, {e.Data[10]}, {e.Data[11]}, {e.Data[12]}";
-     //       SimpleLog.Log("FietsData.txt", $"{e.Data[0]}, {e.Data[1]}, {e.Data[2]}, {e.Data[3]}, {e.Data[4]}, {e.Data[5]}, {e.Data[6]}, {e.Data[7]}, {e.Data[8]}, {e.Data[9]}, {e.Data[10]}, {e.Data[11]}, {e.Data[12]}");
-        }
 
-        public string sendData()
-        {
-            return bikeData;
-        }
+            if (e.Data[4] == 0x19)
+            {
+                bikeData = $"{e.Data[6]}";
 
+            }
+        }
         public async void Connect(string deviceName, string serviceName)
         {
-            // "Tacx Flux 00438"
-            int errorCode = await this.bleBike.OpenDevice(deviceName);
-            errorCode = await this.bleBike.SetService(serviceName);
+            int errorCode = 0;
+            errorCode = errorCode = await this.bleBike.OpenDevice(deviceName);
 
-            // "6e40fec1-b5a3-f393-e0a9-e50e24dcca9e"
-            this.bleBike.SubscriptionValueChanged += (s, e) => SubscriptionValueChanged?.Invoke(e);
-            errorCode = await this.bleBike.SubscribeToCharacteristic(serviceName);
+            var services = bleBike.GetServices;
+            foreach (var service in services)
+            {
+                Console.WriteLine($"Service: {service}");
+            }
+            errorCode = await this.bleBike.SetService("6e40fec1-b5a3-f393-e0a9-e50e24dcca9e");
+            bleBike.SubscriptionValueChanged += BleBike_SubscriptionValueChanged;
+            errorCode = await bleBike.SubscribeToCharacteristic("6e40fec2-b5a3-f393-e0a9-e50e24dcca9e");
         }
 
         public async void ChangeResistance(int percentage)
         {
-            string hex = percentage.ToString("X");
+            this.percent = percentage;
+            byte resistance = (byte) (percentage * 2);
             byte[] output = new byte[13];
                 output[0] = 0x4A; // Sync bit;
                 output[1] = 0x09; // Message Length
                 output[2] = 0x4E; // Message type
                 output[3] = 0x05; // Message type
                 output[4] = 0x30; // Data Type
-                output[11] = 0xFF;
+                output[11] = resistance;
                 output[12] = 0xFF;
-                int i = await this.bleBike.WriteCharacteristic("6e40fec3-b5a3-f393-e0a9-e50e24dcca9e", output);
-        }
+                await this.bleBike.WriteCharacteristic("6e40fec3-b5a3-f393-e0a9-e50e24dcca9e", output);
+        } 
+    }
 
-        public async void EmergencyBreak()
-        {
-            byte[] output = new byte[13];
-            output[0] = 0x4A; // Sync bit;
-            output[1] = 0x09; // Message Length
-            output[2] = 0x4E; // Message type
-            output[3] = 0x05; // Message type
-            output[4] = 0x30; // Data Type
-            output[11] = 0xFF;
-            output[12] = 0xFF;
-            int i = await this.bleBike.WriteCharacteristic("6e40fec3-b5a3-f393-e0a9-e50e24dcca9e", output);
-        }
+    public class DataReceivedArgs : EventArgs
+    {
+        public byte[] DataLine { get; private set; }
 
-        public void ConnectSim(string fileName)
+        public DataReceivedArgs(byte[] DataLine)
         {
-            Simulator bleBikeSim = new Simulator(fileName);
-            bleBikeSim.DataReceived += (e) => SimValueChanged?.Invoke(e);
-            bleBikeSim.Ended += () => SimEnded?.Invoke();
-            bleBikeSim.Start();
+            this.DataLine = DataLine;
         }
     }
 }

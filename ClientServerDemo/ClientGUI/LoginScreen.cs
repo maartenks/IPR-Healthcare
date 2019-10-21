@@ -25,8 +25,6 @@ namespace ClientGUI
         private BleHeartHandler bleHeartHandler;
 
         private List<string> bleBikeList;
-        private List<string> bleHeartList;
-        private bool started;
         private Patient patient;
 
         private int port;
@@ -42,6 +40,7 @@ namespace ClientGUI
         private int phaseTimeSec;
         private int totalSeconds = 0;
         private bool intensive = false;
+        private int resistance = 0;
 
         public LoginScreen()
         {
@@ -49,6 +48,7 @@ namespace ClientGUI
             InitializeDeclarations();
             LoadBikes();
             this.port = 80;
+            startSession.Enabled = false;
             time = new System.Windows.Forms.Timer();
         }
 
@@ -74,17 +74,22 @@ namespace ClientGUI
 
         private void Login_Click(object sender, EventArgs e)
         {
-                //           if (selectBike.SelectedItem != null)
-                //           {
-                //               bleHeartHandler.Connect("Decathlon Dual HR", "Heartrate");
-                //               bleBikeHandler.Connect(selectBike.SelectedItem.ToString(), "6e40fec1-b5a3-f393-e0a9-e50e24dcca9e");
-                ConnectServer();
+            if (selectBike.SelectedItem != null)
+            {
+//                 bleHeartHandler.Connect("Decathlon Dual HR", "Heartrate");
+                 bleBikeHandler.Connect(selectBike.SelectedItem.ToString(), "6e40fec1-b5a3-f393-e0a9-e50e24dcca9e");
+ //               ConnectServer();
                 name.Enabled = false;
+                textWeight.Enabled = false;
+                comboAge.Enabled = false;
+                comboGender.Enabled = false;
+                selectBike.Enabled = false;
                 login.Enabled = false;
                 startSession.Enabled = true;
                 PreInstructions();
-                MakePatient();
-                //               }
+                //      MakePatient();
+                startSession.Enabled = true;
+            }
             }
 
         private void ConnectServer()
@@ -99,7 +104,7 @@ namespace ClientGUI
 
         private static void WriteHeart(string v)
         {
-            Write($"hart\r\n{v}\r\n\r\n");
+            Write($"hart\r\n{JsonConvert.SerializeObject(v)}\r\n\r\n");
         }
 
         private static void WritePatient(string name, string v)
@@ -134,18 +139,25 @@ namespace ClientGUI
 
         private void UpdatePatient()
         {
-            patient.heartbeat.Add(Int32.Parse(bleHeartHandler.sendData()));
-            patient.rotationPerMinute.Add(Int32.Parse(bleBikeHandler.sendData()));
-            if (patient.maxheartbeat < Int32.Parse(bleHeartHandler.sendData()))
+            this.bleBikeHandler.SubscriptionValueChanged += (args) =>
             {
-                patient.maxheartbeat = Int32.Parse(bleHeartHandler.sendData());
+                byte[] receivedDataSubset = args.Data.SubArray(4, args.Data.Length - 2 - 4);
+                pageConversion.RegisterData(receivedDataSubset);
+            };
+            patient.heartbeat.Add(Int32.Parse(bleHeartHandler.heartData));
+            patient.rotationPerMinute.Add(Int32.Parse(bleBikeHandler.bikeData));
+            if (patient.maxheartbeat < Int32.Parse(bleHeartHandler.heartData))
+            {
+                patient.maxheartbeat = Int32.Parse(bleHeartHandler.heartData);
             }
             WritePatient(name.Text, JsonConvert.SerializeObject(patient));
         }
 
         private async void Timertick(object sender, EventArgs e)
         {
-//          UpdatePatient();
+            //          UpdatePatient();
+            await bleBikeHandler.DataAsync();
+//            await bleHeartHandler.DataAsync();
             totalSeconds++;
             phaseTime--;
             this.phaseTimeMin = phaseTime / 60;
@@ -173,28 +185,27 @@ namespace ClientGUI
             }
             if (timePassed.Text == "02:00")
             {
-                OnLevel(); phaseTime = 120; phase++;
+                OnLevel(); phaseTime = 120; phase++; //            ChangeResistanceUp();
             }
             if (timePassed.Text == "04:00")
             {
-                HoldFrequency(); intensive = true; phaseTime = 120; phase++; //            ChangeResistance();
+                HoldFrequency(); phaseTime = 120; phase++; //            ChangeResistanceUp();
             }
             if (timePassed.Text == "06:00")
             {
-                CoolingDown(); intensive = false; phaseTime = 60; phase++; //            ChangeResistance();
+                CoolingDown();phaseTime = 60; phase++; //               ChangeResistanceDown();
             }
                 if (timePassed.Text == "07:00")
             {
                 time.Stop(); phaseTime = 60;
             }
             realtimePhase.Text = phase.ToString();
-
-            //            if (totalSeconds % 10 == 0) { await bleBikeHandler.DataAsync(); WriteBike(bleBikeHandler.sendData(), totalSeconds); }
- //           CheckRPM(Int32.Parse(bleBikeHandler.sendData()));
- //           realtimeRPM.Text = bleBikeHandler.sendData();
- //           realtimeHF.Text = bleHeartHandler.sendData();
- //           realtimeResistance.Text = ChangeResistance();
-//            SendData();
+            CheckRPM(Int32.Parse(bleBikeHandler.bikeData));
+            realtimeRPM.Text = bleBikeHandler.bikeData;
+ //           WriteBike(bleBikeHandler.bikeData, totalSeconds);
+ //           WriteHeart(bleHeartHandler.heartData);
+ //           realtimeHF.Text = bleHeartHandler.heartData;
+            realtimeResistance.Text = bleBikeHandler.percent + "%";
 //            MaxHeartFrequencyHit();
     
         }
@@ -202,15 +213,29 @@ namespace ClientGUI
         private void StopSession()
         {
             time.Stop();
+            steadyStateMessage.ForeColor = Color.Black;
             steadyStateMessage.Text = "De sessie is gestopt en wordt afgebroken.";
+            startSession.Enabled = false;
         }
         private void MaxHeartFrequencyHit()
         {
-            if (Int32.Parse(comboAge.Text) > 14 && Int32.Parse(comboAge.Text) < 24 ) { if (Int32.Parse(bleHeartHandler.sendData()) > 210) StopSession(); }
-            if (Int32.Parse(comboAge.Text) > 25 && Int32.Parse(comboAge.Text) < 34) { if (Int32.Parse(bleHeartHandler.sendData()) > 200) StopSession(); }
-            if (Int32.Parse(comboAge.Text) > 35 && Int32.Parse(comboAge.Text) < 44) { if (Int32.Parse(bleHeartHandler.sendData()) > 190) StopSession(); }
-            if (Int32.Parse(comboAge.Text) > 45 && Int32.Parse(comboAge.Text) < 54) { if (Int32.Parse(bleHeartHandler.sendData()) > 180) StopSession(); }
-            if (Int32.Parse(comboAge.Text) > 55) { if (Int32.Parse(bleHeartHandler.sendData()) > 170) StopSession(); }
+            if (Int32.Parse(comboAge.Text) > 14 && Int32.Parse(comboAge.Text) < 24 ) { if (Int32.Parse(bleHeartHandler.heartData) > 210) StopSession(); }
+            if (Int32.Parse(comboAge.Text) > 25 && Int32.Parse(comboAge.Text) < 34) { if (Int32.Parse(bleHeartHandler.heartData) > 200) StopSession(); }
+            if (Int32.Parse(comboAge.Text) > 35 && Int32.Parse(comboAge.Text) < 44) { if (Int32.Parse(bleHeartHandler.heartData) > 190) StopSession(); }
+            if (Int32.Parse(comboAge.Text) > 45 && Int32.Parse(comboAge.Text) < 54) { if (Int32.Parse(bleHeartHandler.heartData) > 180) StopSession(); }
+            if (Int32.Parse(comboAge.Text) > 55) { if (Int32.Parse(bleHeartHandler.heartData) > 170) StopSession(); }
+        }
+
+        private void SteadyState()
+        {
+            if (Int32.Parse(bleHeartHandler.heartData) < 130)
+            {
+                resistance += 2;
+                if (resistance < 2)
+                {
+                    bleBikeHandler.ChangeResistance(resistance);
+                }
+            }
         }
 
         private void CheckRPM(int RPM)
@@ -220,32 +245,24 @@ namespace ClientGUI
             } else if (RPM > 60)
             {
                 rotationMessage.Text = "U fietst te snel. Verlaag uw snelheid";
-            } else if (RPM > 50 && RPM <60)
+            } else if (RPM > 49 && RPM <61)
             {
                 rotationMessage.Text = "U fietst een goede snelheid. Hou dit tempo aan.";
             }
         }
-
-        private async void SendData()
+        private void ChangeResistanceUp()
         {
-   //         await bleHeartHandler.DataAsync();
-            if (intensive)
+            if (Int32.Parse(bleBikeHandler.bikeData) < 130)
             {
-                if (totalSeconds % 15 == 0)
-                {
-                   WriteHeart("DATA RECEIVED");
-                    realtimeGemHF.Text = bleHeartHandler.sendData();
-                } 
-            } else if (totalSeconds % 60 == 0 )
-            {
-                WriteHeart("DATA RECEIVED");
-                realtimeGemHF.Text = bleHeartHandler.sendData();
+                resistance++;
+                bleBikeHandler.ChangeResistance(resistance);
             }
         }
-        private string ChangeResistance()
+
+        private void ChangeResistanceDown()
         {
-            int i = 0;
-            return i.ToString();
+            resistance--;
+            bleBikeHandler.ChangeResistance(resistance);
         }
 
 
@@ -299,7 +316,7 @@ namespace ClientGUI
 
         private static void WriteBike(string v, int sec)
         {
-            Write($"fiets\r\n{v}\r\n{sec}\r\n");
+            Write($"fiets\r\n{JsonConvert.SerializeObject(v)}\r\n{JsonConvert.SerializeObject(sec)}\r\n");
         }
 
         private void PreInstructions()
@@ -354,6 +371,24 @@ namespace ClientGUI
             {
                 name.Text = "Naam";
                 name.ForeColor = Color.Silver;
+            }
+        }
+
+        private void TextWeight_Leave(object sender, EventArgs e)
+        {
+            if (textWeight.Text == "")
+            {
+                textWeight.Text = "Gewicht in kg";
+                textWeight.ForeColor = Color.Silver;
+            }
+        }
+
+        private void TextWeight_Enter(object sender, EventArgs e)
+        {
+            if (textWeight.Text == "Gewicht in kg")
+            {
+                textWeight.Text = "";
+                textWeight.ForeColor = Color.Black;
             }
         }
     }
