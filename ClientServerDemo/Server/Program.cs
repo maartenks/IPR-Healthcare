@@ -26,11 +26,11 @@ namespace ClientServerDemo
 
             new Program();
         }
-        public static async Task<List<Patient>> LoadClients()
+        public async Task<List<Patient>> LoadClients()
         {
             // Ik ga er hiervan uit dat de data in de clientData.json alleen bestaat uit een json array (JArray) met client objecten.
             // In de file staat een voorbeeldje.
-            return await JsonHandler.LoadObject<List<Patient>>("PatientData.json");
+            return await JsonHandler.LoadObject<List<Patient>>("Data.json");
         }
 
         public void ToevoegenAsync(List<Patient> patients)
@@ -41,7 +41,7 @@ namespace ClientServerDemo
             Console.WriteLine("hey");
             patients.ToArray();
             string output = JsonConvert.SerializeObject(patients);
-            JsonHandler.SaveFile("PatientData.json", output);
+            JsonHandler.SaveFile("Data.json", output);
         }
 
         public static void delete()
@@ -51,7 +51,7 @@ namespace ClientServerDemo
             //list.Add(client);
             //patients.ToArray();
             //string output = JsonConvert.SerializeObject(patients);
-            JsonHandler.DeleteFile("PatientData.json"); 
+            JsonHandler.DeleteFile("Data.json"); 
         }
 
 
@@ -63,9 +63,10 @@ namespace ClientServerDemo
         {
             // make a host and start host
             //var mytask = LoadClients();
-           // patients = mytask.Result;
-           
+            // patients = mytask.Result;
+
             //delete();
+            LoadPatients();
             listener = new TcpListener(IPAddress.Any, 80);
             listener.Start();
 
@@ -74,12 +75,20 @@ namespace ClientServerDemo
             Console.ReadKey();
         }
 
+        private async void LoadPatients()
+        {
+            this.patients = await LoadClients();
+        }
+
         public void save(List<Patient> patients)
         {
+            Console.WriteLine(patients.Count + "gaaaaaaaaaaaaaaaaaaaa");
             Console.WriteLine("hello");
             foreach(Patient now in patients) {
                 foreach(Patient then in this.patients)
                 {
+                    Console.WriteLine(now.Name);
+                    Console.WriteLine(then.Name);
                     if (now.Name.Equals(then.Name))
                     {
                         foreach(History history in now.histories)
@@ -89,14 +98,16 @@ namespace ClientServerDemo
                                 then.histories.Add(history);
                             }
                         }
+                        Console.WriteLine("boooooooooooooooooo");
                     }
                     else
                     {
                         this.patients.Add(now);
+                        Console.WriteLine("aaaaaaaaaaaaaaaaaaaaaaaaaaa");
                     }
                 }
             }
-            this.patients.Add(new Patient("lili", 5, "male", 65, "5"));
+            //this.patients.Add(new Patient("lili", 5, "male", 65, "5"));
             ToevoegenAsync(this.patients); 
 
         }
