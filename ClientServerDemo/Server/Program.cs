@@ -133,6 +133,8 @@ namespace ClientServerDemo
             {
                 this.patients = list;
             }
+            WriteDoctor(); 
+
 
         }
         // accept new clients, add these to list and keep waiting for other clients
@@ -144,13 +146,14 @@ namespace ClientServerDemo
 
             listener.BeginAcceptTcpClient(new AsyncCallback(OnConnect), null);
         }
+        
 
-
-        public void WriteDoctor(string name, string v)
+        public void WriteDoctor()
         {
             foreach (Server s in servers)
             {
-                s.Write($"patientData\r\n{name}\r\n{v}\r\n\r\n");
+                string json = JsonConvert.SerializeObject(this.patients); 
+                s.Write($"patientData\r\n"+ json + "\r\n\r\n");
             }
         }
 

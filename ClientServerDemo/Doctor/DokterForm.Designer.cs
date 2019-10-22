@@ -31,21 +31,14 @@
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.AvailableLabel = new System.Windows.Forms.Label();
             this.selectedListView = new System.Windows.Forms.ListView();
-            this.PatientLabel = new System.Windows.Forms.Label();
             this.availableListBox = new System.Windows.Forms.ListBox();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.chart2 = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.History = new System.Windows.Forms.Label();
             this.allHistroy = new System.Windows.Forms.ListBox();
             this.BeschikbareHistroy = new System.Windows.Forms.Label();
             this.Save = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chart2)).BeginInit();
             this.SuspendLayout();
             // 
             // AvailableLabel
@@ -67,15 +60,6 @@
             this.selectedListView.TabIndex = 3;
             this.selectedListView.UseCompatibleStateImageBehavior = false;
             // 
-            // PatientLabel
-            // 
-            this.PatientLabel.AutoSize = true;
-            this.PatientLabel.Location = new System.Drawing.Point(45, 179);
-            this.PatientLabel.Name = "PatientLabel";
-            this.PatientLabel.Size = new System.Drawing.Size(35, 15);
-            this.PatientLabel.TabIndex = 7;
-            this.PatientLabel.Text = "Now:";
-            // 
             // availableListBox
             // 
             this.availableListBox.FormattingEnabled = true;
@@ -85,6 +69,7 @@
             this.availableListBox.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
             this.availableListBox.Size = new System.Drawing.Size(306, 94);
             this.availableListBox.TabIndex = 10;
+            this.availableListBox.SelectedIndexChanged += new System.EventHandler(this.AvailableListBox_SelectedIndexChanged_1);
             // 
             // chart1
             // 
@@ -92,44 +77,17 @@
             this.chart1.ChartAreas.Add(chartArea1);
             legend1.Name = "Legend1";
             this.chart1.Legends.Add(legend1);
-            this.chart1.Location = new System.Drawing.Point(48, 197);
+            this.chart1.Location = new System.Drawing.Point(33, 160);
             this.chart1.Name = "chart1";
             series1.ChartArea = "ChartArea1";
             series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
             series1.Legend = "Legend1";
             series1.Name = "VO2Now";
             this.chart1.Series.Add(series1);
-            this.chart1.Size = new System.Drawing.Size(300, 300);
+            this.chart1.Size = new System.Drawing.Size(727, 300);
             this.chart1.TabIndex = 11;
             this.chart1.Text = "chart1";
             this.chart1.Click += new System.EventHandler(this.Chart1_Click);
-            // 
-            // chart2
-            // 
-            chartArea2.Name = "ChartArea1";
-            this.chart2.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            this.chart2.Legends.Add(legend2);
-            this.chart2.Location = new System.Drawing.Point(460, 197);
-            this.chart2.Name = "chart2";
-            series2.ChartArea = "ChartArea1";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series2.Legend = "Legend1";
-            series2.Name = "VO2 histroy";
-            this.chart2.Series.Add(series2);
-            this.chart2.Size = new System.Drawing.Size(300, 300);
-            this.chart2.TabIndex = 12;
-            this.chart2.Text = "chart2";
-            this.chart2.Click += new System.EventHandler(this.Chart2_Click);
-            // 
-            // History
-            // 
-            this.History.AutoSize = true;
-            this.History.Location = new System.Drawing.Point(460, 180);
-            this.History.Name = "History";
-            this.History.Size = new System.Drawing.Size(51, 15);
-            this.History.TabIndex = 13;
-            this.History.Text = "Hystory:";
             // 
             // allHistroy
             // 
@@ -170,11 +128,8 @@
             this.Controls.Add(this.Save);
             this.Controls.Add(this.BeschikbareHistroy);
             this.Controls.Add(this.allHistroy);
-            this.Controls.Add(this.History);
-            this.Controls.Add(this.chart2);
             this.Controls.Add(this.chart1);
             this.Controls.Add(this.availableListBox);
-            this.Controls.Add(this.PatientLabel);
             this.Controls.Add(this.selectedListView);
             this.Controls.Add(this.AvailableLabel);
             this.Font = new System.Drawing.Font("Nirmala UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -182,7 +137,6 @@
             this.Name = "DokterForm";
             this.Text = "Dokter";
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chart2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -192,11 +146,8 @@
 
         private System.Windows.Forms.Label AvailableLabel;
         private System.Windows.Forms.ListView selectedListView;
-        private System.Windows.Forms.Label PatientLabel;
         private System.Windows.Forms.ListBox availableListBox;
         private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
-        private System.Windows.Forms.DataVisualization.Charting.Chart chart2;
-        private System.Windows.Forms.Label History;
         private System.Windows.Forms.ListBox allHistroy;
         private System.Windows.Forms.Label BeschikbareHistroy;
         private System.Windows.Forms.Button Save;
