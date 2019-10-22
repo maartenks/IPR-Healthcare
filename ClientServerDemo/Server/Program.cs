@@ -85,7 +85,7 @@ namespace ClientServerDemo
         {
             this.patients = await LoadClients();
             done = true; 
-           // this.patients.Add(new Patient("lala", 3, "Vrouw", 65, "ta")); 
+            //this.patients.Add(new Patient("lala", 3, "Vrouw", 65, "ta")); 
         }
 
         public bool done { get; set; }
@@ -118,7 +118,28 @@ namespace ClientServerDemo
             foreach (Patient now in patients)
             {
                 int i = 0;
-                foreach (Patient then in this.patients)
+                Patient b = this.patients.Find(x => x.Name == now.Name); 
+                if (b != null)
+                {
+                    History history = new History();
+                    history.workload = now.workload;
+                    history.heartbeat = now.heartbeat;
+                    history.maxheartbeat = now.maxheartbeat;
+                    int index = list.IndexOf(b);
+                    Console.WriteLine(index + " index");
+                    Console.WriteLine(list.Count + " length");
+                    list[index].histories.Add(history);
+                }
+                else
+                {
+                    list.Add(now);
+                    History history = new History();
+                    history.workload = now.workload;
+                    history.heartbeat = now.heartbeat;
+                    history.maxheartbeat = now.maxheartbeat;
+                    list.Last().histories.Add(history);
+                }
+                /*foreach (Patient then in this.patients)
                 {
                     Console.WriteLine(now.Name);
                     Console.WriteLine(then.Name);
@@ -132,7 +153,7 @@ namespace ClientServerDemo
                                 then.histories.Add(history);
                             }
                         }*/
-                        History history = new History();
+                       /* History history = new History();
                         history.workload = then.workload;
                         history.heartbeat = then.heartbeat;
                         history.maxheartbeat = then.maxheartbeat;
@@ -148,9 +169,9 @@ namespace ClientServerDemo
                         history.maxheartbeat = now.maxheartbeat;
                         list.Last().histories.Add(history); 
                         Console.WriteLine("aaaaaaaaaaaaaaaaaaaaaaaaaaa");
-                    }
+                    }*/
                     i++;
-                }
+                
             }
             //this.patients.Add(new Patient("lili", 5, "male", 65, "5"));
             ToevoegenAsync(list);

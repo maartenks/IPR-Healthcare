@@ -72,7 +72,7 @@ namespace ClientServerDemo
                     patiens.Add(patient);
                     if (program.done)
                     {
-                        program.done = false; 
+                        program.done = false
                         program.save(patiens);
                     }
                     Console.WriteLine($"{data[2]}");

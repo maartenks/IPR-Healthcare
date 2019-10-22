@@ -299,6 +299,11 @@ namespace Doctor
 
         private void AllHistroy_SelectedIndexChanged(object sender, EventArgs e)
         {
+            foreach (var series in chart1.Series)
+            {
+                series.Points.Clear();
+            }
+            
             int index = allHistroy.SelectedIndex;
             writechart(patient.histories[index], this.patient); 
 

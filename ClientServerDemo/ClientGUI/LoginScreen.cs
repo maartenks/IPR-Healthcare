@@ -129,12 +129,12 @@ namespace ClientGUI
             List<double> heartate = new List<double>(); 
             for(int i = 0; i < 20; i++)
             {
-                workload.Add(i * 4-6);
-                heartate.Add(i * 5-1/3); 
+                workload.Add(i * 5-9);
+                heartate.Add(i * 9-5/3); 
             }
             hanna.workload = workload;
             hanna.heartbeat = heartate;
-            //WritePatient("d", JsonConvert.SerializeObject(hanna));
+            WritePatient("d", JsonConvert.SerializeObject(hanna));
             hanna1.workload = workload;
             hanna1.heartbeat = heartate;
            // WritePatient("d", JsonConvert.SerializeObject(hanna1));
@@ -143,7 +143,7 @@ namespace ClientGUI
             //WritePatient("d", JsonConvert.SerializeObject(hanna2));
             hanno.workload = workload;
             hanno.heartbeat = heartate;
-            WritePatient("d", JsonConvert.SerializeObject(hanno));
+            //WritePatient("d", JsonConvert.SerializeObject(hanno));
             hanno3.workload = workload;
             hanno3.heartbeat = heartate;
            // WritePatient("d", JsonConvert.SerializeObject(hanno3));
