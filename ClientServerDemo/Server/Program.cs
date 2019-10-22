@@ -84,10 +84,15 @@ namespace ClientServerDemo
         private async void LoadPatients()
         {
             this.patients = await LoadClients();
+            done = true; 
+            //this.patients.Add(new Patient("lala", 3, "Vrouw", 65, "ta")); 
         }
+
+        public bool done { get; set; }
 
         public void save(List<Patient> patients)
         {
+            delete(); 
             Console.WriteLine(patients.Count + "gaaaaaaaaaaaaaaaaaaaa");
             Console.WriteLine("hello");
             List<Patient> list = new List<Patient>();
@@ -109,14 +114,19 @@ namespace ClientServerDemo
                     Console.WriteLine(then.Name);
                     if (now.Name.Equals(then.Name))
                     {
-                        foreach (History history in then.histories)
+                        /*foreach (History history in then.histories)
                         {
                             if (!then.histories.Contains(history))
                             {
                                 list[i].histories.Add(history);
                                 then.histories.Add(history);
                             }
-                        }
+                        }*/
+                        History history = new History();
+                        history.workload = then.workload;
+                        history.heartbeat = then.heartbeat;
+                        history.maxheartbeat = then.maxheartbeat;
+                        list[i].histories.Add(history); 
                         Console.WriteLine("boooooooooooooooooo");
                     }
                     else
@@ -133,7 +143,9 @@ namespace ClientServerDemo
             {
                 this.patients = list;
             }
-            WriteDoctor(); 
+            WriteDoctor();
+            done = true; 
+            
 
 
         }

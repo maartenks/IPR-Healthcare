@@ -51,6 +51,7 @@ namespace ClientGUI
             InitializeComponent();
             InitializeDeclarations();
             LoadBikes();
+           
             this.port = 80;
             startSession.Enabled = false;
             time = new System.Windows.Forms.Timer();
@@ -99,8 +100,9 @@ namespace ClientGUI
                 await bleBikeHandler.DataAsync();
                 bleBikeHandler.ChangeResistance(0);
             }
-            ConnectServer();
-            MockData(); 
+             ConnectServer();
+           
+            
             }
 
         private void ConnectServer()
@@ -110,6 +112,7 @@ namespace ClientGUI
 
             stream = client.GetStream();
             stream.BeginRead(buffer, 0, buffer.Length, new AsyncCallback(OnRead), null);
+            MockData();
 
         }
 
@@ -126,8 +129,8 @@ namespace ClientGUI
             List<double> heartate = new List<double>(); 
             for(int i = 0; i < 20; i++)
             {
-                workload.Add(i * 4);
-                heartate.Add(i * 5); 
+                workload.Add(i * 4-6);
+                heartate.Add(i * 5-1/3); 
             }
             hanna.workload = workload;
             hanna.heartbeat = heartate;
@@ -211,16 +214,18 @@ namespace ClientGUI
             }
         
         }
-        
+
         private void RealSteadyState()
         {
             int diff = maxHeart - minHeart;
             if (diff > 6)
             {
+                instructions.AppendText("\r\nSteady state is bereikt!");
                 patient.steadyState = true;
             }
             else
             {
+                instructions.AppendText("\r\nSteady state is helaas niet bereikt.");
                 patient.steadyState = false;
             }
         }

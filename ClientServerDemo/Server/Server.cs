@@ -50,6 +50,8 @@ namespace ClientServerDemo
 
         }
 
+        
+
         private void handlePacket(string[] data)
         {
             switch (data[0])
@@ -68,7 +70,11 @@ namespace ClientServerDemo
                     Patient patient = JsonConvert.DeserializeObject<Patient>(data[2]);
                     List<Patient> patiens = new List<Patient>();
                     patiens.Add(patient);
-                    program.save(patiens);
+                    if (program.done)
+                    {
+                        program.done = false; 
+                        program.save(patiens);
+                    }
                     Console.WriteLine($"{data[2]}");
                     break;
                 case "stop":
