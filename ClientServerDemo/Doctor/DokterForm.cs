@@ -278,11 +278,6 @@ namespace Doctor
             Write("stop\r\n" + json + "\r\n\r\n"); 
         }
 
-        private void Save_Click(object sender, EventArgs e)
-        {
-            string json = JsonConvert.SerializeObject(this.patients);
-            Write("stop\r\n" + json + "\r\n\r\n");
-        }
 
         private Patient patient; 
         private void AvailableListBox_SelectedIndexChanged_1(object sender, EventArgs e)

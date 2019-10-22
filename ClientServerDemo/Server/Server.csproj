@@ -64,10 +64,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="clientData.json" />
     <None Include="Data.json" />
     <None Include="packages.config" />
-    <None Include="PatientData.json" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

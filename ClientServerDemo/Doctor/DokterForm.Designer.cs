@@ -37,7 +37,6 @@
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.allHistroy = new System.Windows.Forms.ListBox();
             this.BeschikbareHistroy = new System.Windows.Forms.Label();
-            this.Save = new System.Windows.Forms.Button();
             this.refresh = new System.Windows.Forms.Button();
             this.clientInfo = new System.Windows.Forms.RichTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
@@ -106,19 +105,9 @@
             this.BeschikbareHistroy.AutoSize = true;
             this.BeschikbareHistroy.Location = new System.Drawing.Point(463, 20);
             this.BeschikbareHistroy.Name = "BeschikbareHistroy";
-            this.BeschikbareHistroy.Size = new System.Drawing.Size(161, 25);
+            this.BeschikbareHistroy.Size = new System.Drawing.Size(156, 25);
             this.BeschikbareHistroy.TabIndex = 15;
-            this.BeschikbareHistroy.Text = "Beschikbar hystory";
-            // 
-            // Save
-            // 
-            this.Save.Location = new System.Drawing.Point(367, 466);
-            this.Save.Name = "Save";
-            this.Save.Size = new System.Drawing.Size(75, 23);
-            this.Save.TabIndex = 16;
-            this.Save.Text = "Save";
-            this.Save.UseVisualStyleBackColor = true;
-            this.Save.Click += new System.EventHandler(this.Save_Click);
+            this.BeschikbareHistroy.Text = "Beschikbar history";
             // 
             // refresh
             // 
@@ -147,7 +136,6 @@
             this.ClientSize = new System.Drawing.Size(821, 501);
             this.Controls.Add(this.clientInfo);
             this.Controls.Add(this.refresh);
-            this.Controls.Add(this.Save);
             this.Controls.Add(this.BeschikbareHistroy);
             this.Controls.Add(this.allHistroy);
             this.Controls.Add(this.chart1);
@@ -172,7 +160,6 @@
         private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
         private System.Windows.Forms.ListBox allHistroy;
         private System.Windows.Forms.Label BeschikbareHistroy;
-        private System.Windows.Forms.Button Save;
         private System.Windows.Forms.Button refresh;
         private System.Windows.Forms.RichTextBox clientInfo;
     }

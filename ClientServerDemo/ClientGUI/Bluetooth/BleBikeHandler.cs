@@ -1,7 +1,4 @@
 ﻿using Avans.TI.BLE;
-using ClientGUI.Conversion;
-using ClientGUI.Sim;
-using ClientGUI.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +21,6 @@ namespace ClientGUI.Bluetooth
         public event SimEndedHandler SimEnded;
         public delegate void SimEndedHandler();
         public int errorCode;
-        private PageConversion pageConversion;
         public int percent;
         public int workload;
 

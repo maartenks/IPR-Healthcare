@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.login = new System.Windows.Forms.Button();
             this.name = new System.Windows.Forms.TextBox();
             this.selectBike = new System.Windows.Forms.ComboBox();
@@ -67,9 +67,9 @@
             this.login.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.login.Location = new System.Drawing.Point(12, 175);
+            this.login.Location = new System.Drawing.Point(16, 181);
             this.login.Name = "login";
-            this.login.Size = new System.Drawing.Size(160, 46);
+            this.login.Size = new System.Drawing.Size(193, 65);
             this.login.TabIndex = 0;
             this.login.Text = "Log-in";
             this.login.UseVisualStyleBackColor = true;
@@ -83,7 +83,7 @@
             this.name.ForeColor = System.Drawing.SystemColors.InactiveCaption;
             this.name.Location = new System.Drawing.Point(12, 12);
             this.name.Name = "name";
-            this.name.Size = new System.Drawing.Size(162, 26);
+            this.name.Size = new System.Drawing.Size(197, 26);
             this.name.TabIndex = 1;
             this.name.Text = "Naam";
             this.name.Enter += new System.EventHandler(this.Name_Enter);
@@ -96,17 +96,17 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.selectBike.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.selectBike.FormattingEnabled = true;
-            this.selectBike.Location = new System.Drawing.Point(12, 145);
+            this.selectBike.Location = new System.Drawing.Point(12, 144);
             this.selectBike.Name = "selectBike";
-            this.selectBike.Size = new System.Drawing.Size(162, 25);
+            this.selectBike.Size = new System.Drawing.Size(197, 25);
             this.selectBike.TabIndex = 6;
             this.selectBike.Text = "Selecteer een fiets";
             // 
             // startSession
             // 
-            this.startSession.Location = new System.Drawing.Point(12, 329);
+            this.startSession.Location = new System.Drawing.Point(16, 394);
             this.startSession.Name = "startSession";
-            this.startSession.Size = new System.Drawing.Size(160, 51);
+            this.startSession.Size = new System.Drawing.Size(193, 61);
             this.startSession.TabIndex = 8;
             this.startSession.Text = "Start";
             this.startSession.UseVisualStyleBackColor = true;
@@ -114,16 +114,16 @@
             // 
             // instructions
             // 
-            this.instructions.Location = new System.Drawing.Point(218, 189);
+            this.instructions.Location = new System.Drawing.Point(215, 252);
             this.instructions.Name = "instructions";
-            this.instructions.Size = new System.Drawing.Size(558, 75);
+            this.instructions.Size = new System.Drawing.Size(678, 76);
             this.instructions.TabIndex = 9;
             this.instructions.Text = "";
             // 
             // timePassed
             // 
             this.timePassed.AutoSize = true;
-            this.timePassed.Location = new System.Drawing.Point(12, 308);
+            this.timePassed.Location = new System.Drawing.Point(12, 371);
             this.timePassed.Name = "timePassed";
             this.timePassed.Size = new System.Drawing.Size(49, 20);
             this.timePassed.TabIndex = 10;
@@ -134,7 +134,7 @@
             this.comboGender.FormattingEnabled = true;
             this.comboGender.Location = new System.Drawing.Point(12, 45);
             this.comboGender.Name = "comboGender";
-            this.comboGender.Size = new System.Drawing.Size(162, 28);
+            this.comboGender.Size = new System.Drawing.Size(197, 28);
             this.comboGender.TabIndex = 11;
             this.comboGender.Text = "Geslacht";
             // 
@@ -143,14 +143,14 @@
             this.comboAge.FormattingEnabled = true;
             this.comboAge.Location = new System.Drawing.Point(12, 78);
             this.comboAge.Name = "comboAge";
-            this.comboAge.Size = new System.Drawing.Size(162, 28);
+            this.comboAge.Size = new System.Drawing.Size(197, 28);
             this.comboAge.TabIndex = 12;
             this.comboAge.Text = "Leeftijd";
             // 
             // labelRPM
             // 
             this.labelRPM.AutoSize = true;
-            this.labelRPM.Location = new System.Drawing.Point(226, 369);
+            this.labelRPM.Location = new System.Drawing.Point(226, 462);
             this.labelRPM.Name = "labelRPM";
             this.labelRPM.Size = new System.Drawing.Size(52, 20);
             this.labelRPM.TabIndex = 13;
@@ -159,7 +159,7 @@
             // labelBPM
             // 
             this.labelBPM.AutoSize = true;
-            this.labelBPM.Location = new System.Drawing.Point(226, 408);
+            this.labelBPM.Location = new System.Drawing.Point(226, 500);
             this.labelBPM.Name = "labelBPM";
             this.labelBPM.Size = new System.Drawing.Size(120, 20);
             this.labelBPM.TabIndex = 14;
@@ -168,7 +168,7 @@
             // labelResistance
             // 
             this.labelResistance.AutoSize = true;
-            this.labelResistance.Location = new System.Drawing.Point(226, 329);
+            this.labelResistance.Location = new System.Drawing.Point(226, 428);
             this.labelResistance.Name = "labelResistance";
             this.labelResistance.Size = new System.Drawing.Size(95, 20);
             this.labelResistance.TabIndex = 15;
@@ -177,7 +177,7 @@
             // realtimeRPM
             // 
             this.realtimeRPM.AutoSize = true;
-            this.realtimeRPM.Location = new System.Drawing.Point(364, 369);
+            this.realtimeRPM.Location = new System.Drawing.Point(435, 462);
             this.realtimeRPM.Name = "realtimeRPM";
             this.realtimeRPM.Size = new System.Drawing.Size(18, 20);
             this.realtimeRPM.TabIndex = 16;
@@ -186,7 +186,7 @@
             // realtimeHF
             // 
             this.realtimeHF.AutoSize = true;
-            this.realtimeHF.Location = new System.Drawing.Point(364, 408);
+            this.realtimeHF.Location = new System.Drawing.Point(435, 500);
             this.realtimeHF.Name = "realtimeHF";
             this.realtimeHF.Size = new System.Drawing.Size(18, 20);
             this.realtimeHF.TabIndex = 17;
@@ -195,7 +195,7 @@
             // realtimeResistance
             // 
             this.realtimeResistance.AutoSize = true;
-            this.realtimeResistance.Location = new System.Drawing.Point(364, 329);
+            this.realtimeResistance.Location = new System.Drawing.Point(435, 419);
             this.realtimeResistance.Name = "realtimeResistance";
             this.realtimeResistance.Size = new System.Drawing.Size(18, 20);
             this.realtimeResistance.TabIndex = 18;
@@ -203,9 +203,9 @@
             // 
             // stopSession
             // 
-            this.stopSession.Location = new System.Drawing.Point(12, 388);
+            this.stopSession.Location = new System.Drawing.Point(16, 462);
             this.stopSession.Name = "stopSession";
-            this.stopSession.Size = new System.Drawing.Size(160, 51);
+            this.stopSession.Size = new System.Drawing.Size(193, 58);
             this.stopSession.TabIndex = 19;
             this.stopSession.Text = "Stop";
             this.stopSession.UseVisualStyleBackColor = true;
@@ -214,7 +214,7 @@
             // labelFase
             // 
             this.labelFase.AutoSize = true;
-            this.labelFase.Location = new System.Drawing.Point(508, 332);
+            this.labelFase.Location = new System.Drawing.Point(561, 428);
             this.labelFase.Name = "labelFase";
             this.labelFase.Size = new System.Drawing.Size(53, 20);
             this.labelFase.TabIndex = 20;
@@ -223,7 +223,7 @@
             // labelPhaseTime
             // 
             this.labelPhaseTime.AutoSize = true;
-            this.labelPhaseTime.Location = new System.Drawing.Point(508, 369);
+            this.labelPhaseTime.Location = new System.Drawing.Point(561, 462);
             this.labelPhaseTime.Name = "labelPhaseTime";
             this.labelPhaseTime.Size = new System.Drawing.Size(73, 20);
             this.labelPhaseTime.TabIndex = 21;
@@ -232,7 +232,7 @@
             // realtimePhase
             // 
             this.realtimePhase.AutoSize = true;
-            this.realtimePhase.Location = new System.Drawing.Point(734, 332);
+            this.realtimePhase.Location = new System.Drawing.Point(878, 428);
             this.realtimePhase.Name = "realtimePhase";
             this.realtimePhase.Size = new System.Drawing.Size(18, 20);
             this.realtimePhase.TabIndex = 22;
@@ -241,7 +241,7 @@
             // realtimePhaseTime
             // 
             this.realtimePhaseTime.AutoSize = true;
-            this.realtimePhaseTime.Location = new System.Drawing.Point(734, 369);
+            this.realtimePhaseTime.Location = new System.Drawing.Point(878, 462);
             this.realtimePhaseTime.Name = "realtimePhaseTime";
             this.realtimePhaseTime.Size = new System.Drawing.Size(18, 20);
             this.realtimePhaseTime.TabIndex = 23;
@@ -253,15 +253,15 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.resistanceMessage.ForeColor = System.Drawing.SystemColors.InactiveCaption;
-            this.resistanceMessage.Location = new System.Drawing.Point(218, 302);
+            this.resistanceMessage.Location = new System.Drawing.Point(215, 390);
             this.resistanceMessage.Name = "resistanceMessage";
-            this.resistanceMessage.Size = new System.Drawing.Size(558, 26);
+            this.resistanceMessage.Size = new System.Drawing.Size(678, 26);
             this.resistanceMessage.TabIndex = 25;
             // 
             // labelHeart
             // 
             this.labelHeart.AutoSize = true;
-            this.labelHeart.Location = new System.Drawing.Point(508, 408);
+            this.labelHeart.Location = new System.Drawing.Point(561, 500);
             this.labelHeart.Name = "labelHeart";
             this.labelHeart.Size = new System.Drawing.Size(191, 20);
             this.labelHeart.TabIndex = 26;
@@ -270,7 +270,7 @@
             // realtimeGemHF
             // 
             this.realtimeGemHF.AutoSize = true;
-            this.realtimeGemHF.Location = new System.Drawing.Point(734, 408);
+            this.realtimeGemHF.Location = new System.Drawing.Point(878, 500);
             this.realtimeGemHF.Name = "realtimeGemHF";
             this.realtimeGemHF.Size = new System.Drawing.Size(18, 20);
             this.realtimeGemHF.TabIndex = 27;
@@ -284,7 +284,7 @@
             this.textWeight.ForeColor = System.Drawing.SystemColors.InactiveCaption;
             this.textWeight.Location = new System.Drawing.Point(12, 112);
             this.textWeight.Name = "textWeight";
-            this.textWeight.Size = new System.Drawing.Size(162, 26);
+            this.textWeight.Size = new System.Drawing.Size(197, 26);
             this.textWeight.TabIndex = 29;
             this.textWeight.Text = "Gewicht in kg";
             this.textWeight.Enter += new System.EventHandler(this.TextWeight_Enter);
@@ -296,30 +296,30 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.rotationMessage.ForeColor = System.Drawing.SystemColors.InactiveCaption;
-            this.rotationMessage.Location = new System.Drawing.Point(218, 270);
+            this.rotationMessage.Location = new System.Drawing.Point(215, 345);
             this.rotationMessage.Name = "rotationMessage";
-            this.rotationMessage.Size = new System.Drawing.Size(558, 26);
+            this.rotationMessage.Size = new System.Drawing.Size(678, 26);
             this.rotationMessage.TabIndex = 30;
             // 
             // chart1
             // 
-            chartArea1.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.chart1.Legends.Add(legend1);
-            this.chart1.Location = new System.Drawing.Point(218, -3);
+            chartArea2.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            this.chart1.Legends.Add(legend2);
+            this.chart1.Location = new System.Drawing.Point(215, 12);
             this.chart1.Name = "chart1";
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series1.Legend = "Legend1";
-            series1.Name = "RPM";
-            series2.ChartArea = "ChartArea1";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series2.Legend = "Legend1";
-            series2.Name = "Heartrate";
-            this.chart1.Series.Add(series1);
-            this.chart1.Series.Add(series2);
-            this.chart1.Size = new System.Drawing.Size(558, 186);
+            series3.ChartArea = "ChartArea1";
+            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series3.Legend = "Legend1";
+            series3.Name = "RPM";
+            series4.ChartArea = "ChartArea1";
+            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series4.Legend = "Legend1";
+            series4.Name = "Heartrate";
+            this.chart1.Series.Add(series3);
+            this.chart1.Series.Add(series4);
+            this.chart1.Size = new System.Drawing.Size(678, 234);
             this.chart1.TabIndex = 31;
             this.chart1.Text = "chart1";
             // 
@@ -327,7 +327,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 449);
+            this.ClientSize = new System.Drawing.Size(920, 529);
             this.Controls.Add(this.chart1);
             this.Controls.Add(this.rotationMessage);
             this.Controls.Add(this.textWeight);

@@ -55,8 +55,6 @@
   <ItemGroup>
     <Compile Include="Bluetooth\BleBikeHandler.cs" />
     <Compile Include="Bluetooth\BleHeartHandler.cs" />
-    <Compile Include="Connection\ServerConnection.cs" />
-    <Compile Include="Conversion\PageConversion.cs" />
     <Compile Include="LoginScreen.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -66,8 +64,6 @@
     <Compile Include="Patient.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Simulator\Simulator.cs" />
-    <Compile Include="Utils\ExtensionHelper.cs" />
     <EmbeddedResource Include="LoginScreen.resx">
       <DependentUpon>LoginScreen.cs</DependentUpon>
     </EmbeddedResource>

@@ -2,11 +2,8 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Sockets;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace ClientServerDemo
 {
@@ -59,12 +56,6 @@ namespace ClientServerDemo
                 case "login":
                     this.login = data[1];
                     break;
-                case "hart":
-                    Console.WriteLine(data[1]);
-                    break;
-                case "bike":
-                    Console.WriteLine(data[1]);
-                    break;
                 case "patient":
                     //                    program.WriteDoctor(data[1], data[2]);
                     Patient patient = JsonConvert.DeserializeObject<Patient>(data[2]);
@@ -72,7 +63,7 @@ namespace ClientServerDemo
                     patiens.Add(patient);
                     if (program.done)
                     {
-                        program.done = false
+                        program.done = false;
                         program.save(patiens);
                     }
                     Console.WriteLine($"{data[2]}");

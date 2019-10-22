@@ -1,16 +1,8 @@
 ﻿using System;
-using Avans.TI.BLE;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using ClientGUI.Bluetooth;
-using ClientGUI.Conversion;
-using ClientGUI.Utils;
-using System.Threading;
 using System.Net.Sockets;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json;
@@ -19,8 +11,6 @@ namespace ClientGUI
 {
     public partial class LoginScreen : Form
     {
-
-        private static PageConversion pageConversion;
         private BleBikeHandler bleBikeHandler;
         private BleHeartHandler bleHeartHandler;
 
@@ -99,9 +89,7 @@ namespace ClientGUI
                 await bleHeartHandler.DataAsync();
                 await bleBikeHandler.DataAsync();
                 bleBikeHandler.ChangeResistance(0);
-            }
-             ConnectServer();
-           
+            }        
             
             }
 
@@ -112,7 +100,7 @@ namespace ClientGUI
 
             stream = client.GetStream();
             stream.BeginRead(buffer, 0, buffer.Length, new AsyncCallback(OnRead), null);
-            MockData();
+           // MockData();
 
         }
 
@@ -155,11 +143,6 @@ namespace ClientGUI
            // WritePatient("d", JsonConvert.SerializeObject(hanng));
 
 
-        }
-
-        private static void WriteHeart(string v)
-        {
-            Write($"hart\r\n{JsonConvert.SerializeObject(v)}\r\n\r\n");
         }
 
         private static void WritePatient(string name, string v)
@@ -425,11 +408,6 @@ namespace ClientGUI
             stream.Write(System.Text.Encoding.ASCII.GetBytes(v), 0, v.Length);
             stream.Flush();
 
-        }
-
-        private static void WriteBike(string v, int sec)
-        {
-            Write($"fiets\r\n{JsonConvert.SerializeObject(v)}\r\n{JsonConvert.SerializeObject(sec)}\r\n");
         }
 
         private void PreInstructions()
