@@ -64,7 +64,8 @@ namespace ClientServerDemo
                     Console.WriteLine(data[1]);
                     break;
                 case "patient":
-                    program.WriteDoctor(data[1], data[2]);
+                    //                    program.WriteDoctor(data[1], data[2]);
+                    Console.WriteLine($"{data[2]}");
                     break;
                 case "stop":
                     program.save(JsonConvert.DeserializeObject<List<Patient>>(data[1]));

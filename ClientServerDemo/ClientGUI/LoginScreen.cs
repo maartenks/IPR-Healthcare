@@ -41,6 +41,7 @@ namespace ClientGUI
         private int totalSeconds = 0;
         private bool intensive = false;
         private int resistance = 0;
+        private List<int> steadyState = new List<int>();
 
         public LoginScreen()
         {
@@ -61,6 +62,7 @@ namespace ClientGUI
         private async void LoadBikes()
         {
             this.bleBikeList = await this.bleBikeHandler.RetrieveBleBikes("Tacx");
+            await bleHeartHandler.InitBleHeart();
             this.bleBikeList.ForEach(x => selectBike.Items.Add(x));
             comboGender.Items.Add("Man");
             comboGender.Items.Add("Vrouw");
@@ -72,13 +74,14 @@ namespace ClientGUI
 
 
 
-        private void Login_Click(object sender, EventArgs e)
+        private async void Login_Click(object sender, EventArgs e)
         {
             if (selectBike.SelectedItem != null)
             {
-//                 bleHeartHandler.Connect("Decathlon Dual HR", "Heartrate");
-                 bleBikeHandler.Connect(selectBike.SelectedItem.ToString(), "6e40fec1-b5a3-f393-e0a9-e50e24dcca9e");
- //               ConnectServer();
+                await bleHeartHandler.InitBleHeart();
+                bleHeartHandler.Connect("Decathlon Dual HR", "Heartrate");
+                bleBikeHandler.Connect(selectBike.SelectedItem.ToString(), "6e40fec1-b5a3-f393-e0a9-e50e24dcca9e");
+                ConnectServer();
                 name.Enabled = false;
                 textWeight.Enabled = false;
                 comboAge.Enabled = false;
@@ -87,8 +90,11 @@ namespace ClientGUI
                 login.Enabled = false;
                 startSession.Enabled = true;
                 PreInstructions();
-                //      MakePatient();
+                MakePatient();
                 startSession.Enabled = true;
+                await bleHeartHandler.DataAsync();
+                await bleBikeHandler.DataAsync();
+                bleBikeHandler.ChangeResistance(0);
             }
             }
 
@@ -120,7 +126,7 @@ namespace ClientGUI
         private void Initialize_Timer()
         {
             if (timePassed.Text == "00:00") { WarmingUp(); phase++; }
-            time.Interval = 100;
+            time.Interval = 300;
             time.Tick += new EventHandler(Timertick);
             time.Start();
         }
@@ -139,31 +145,37 @@ namespace ClientGUI
 
         private void UpdatePatient()
         {
-            this.bleBikeHandler.SubscriptionValueChanged += (args) =>
-            {
-                byte[] receivedDataSubset = args.Data.SubArray(4, args.Data.Length - 2 - 4);
-                pageConversion.RegisterData(receivedDataSubset);
-            };
-            patient.heartbeat.Add(Int32.Parse(bleHeartHandler.heartData));
-            patient.rotationPerMinute.Add(Int32.Parse(bleBikeHandler.bikeData));
-            if (patient.maxheartbeat < Int32.Parse(bleHeartHandler.heartData))
-            {
-                patient.maxheartbeat = Int32.Parse(bleHeartHandler.heartData);
-            }
             WritePatient(name.Text, JsonConvert.SerializeObject(patient));
+        }
+
+        private async void UpdataData()
+        {
+            await bleBikeHandler.DataAsync();
+            await bleHeartHandler.DataAsync();
+        }
+
+        private void CalculateSteadyState()
+        {
+           
         }
 
         private async void Timertick(object sender, EventArgs e)
         {
-            //          UpdatePatient();
-            await bleBikeHandler.DataAsync();
-//            await bleHeartHandler.DataAsync();
+            UpdataData();
             totalSeconds++;
             phaseTime--;
             this.phaseTimeMin = phaseTime / 60;
             this.phaseTimeSec = phaseTime & 60;
             this.seconds = totalSeconds % 60;
             this.minutes = totalSeconds / 60;
+            if (totalSeconds % 15 == 0)
+            {
+                if (intensive)
+                {
+                    steadyState.Add(Int32.Parse(bleHeartHandler.heartData));
+                }
+                realtimeGemHF.Text = bleHeartHandler.heartData;
+            }
             if (this.phaseTimeSec < 10) {
                 realtimePhaseTime.Text = "0" + this.phaseTimeMin + ":0" + this.phaseTimeSec;
             }
@@ -185,29 +197,37 @@ namespace ClientGUI
             }
             if (timePassed.Text == "02:00")
             {
-                OnLevel(); phaseTime = 120; phase++; //            ChangeResistanceUp();
+                OnLevel(); phaseTime = 120; phase++; intensive = true;
             }
             if (timePassed.Text == "04:00")
             {
-                HoldFrequency(); phaseTime = 120; phase++; //            ChangeResistanceUp();
+                HoldFrequency(); phaseTime = 120; phase++;       
             }
             if (timePassed.Text == "06:00")
             {
-                CoolingDown();phaseTime = 60; phase++; //               ChangeResistanceDown();
+                CoolingDown();    phaseTime = 60; phase++;       intensive = false; ChangeResistanceDown();  CalculateSteadyState();
             }
                 if (timePassed.Text == "07:00")
             {
-                time.Stop(); phaseTime = 60;
+                time.Stop(); phaseTime = 60; UpdatePatient();
+            }
+                if (intensive)
+            {
+                MaxHeartFrequencyHit(); SteadyState();
             }
             realtimePhase.Text = phase.ToString();
-            CheckRPM(Int32.Parse(bleBikeHandler.bikeData));
             realtimeRPM.Text = bleBikeHandler.bikeData;
- //           WriteBike(bleBikeHandler.bikeData, totalSeconds);
- //           WriteHeart(bleHeartHandler.heartData);
- //           realtimeHF.Text = bleHeartHandler.heartData;
+            patient.rotationPerMinute.Add(Int32.Parse(bleBikeHandler.bikeData));
+            patient.heartbeat.Add(Int32.Parse(bleHeartHandler.heartData));
+            if (patient.maxheartbeat < Int32.Parse(bleHeartHandler.heartData))
+            {
+                patient.maxheartbeat = Int32.Parse(bleHeartHandler.heartData);
+            }
+            realtimeHF.Text = bleHeartHandler.heartData;
             realtimeResistance.Text = bleBikeHandler.percent + "%";
-//            MaxHeartFrequencyHit();
-    
+            CheckRPM(Int32.Parse(bleBikeHandler.bikeData));
+
+
         }
 
         private void StopSession()
@@ -219,10 +239,10 @@ namespace ClientGUI
         }
         private void MaxHeartFrequencyHit()
         {
-            if (Int32.Parse(comboAge.Text) > 14 && Int32.Parse(comboAge.Text) < 24 ) { if (Int32.Parse(bleHeartHandler.heartData) > 210) StopSession(); }
-            if (Int32.Parse(comboAge.Text) > 25 && Int32.Parse(comboAge.Text) < 34) { if (Int32.Parse(bleHeartHandler.heartData) > 200) StopSession(); }
-            if (Int32.Parse(comboAge.Text) > 35 && Int32.Parse(comboAge.Text) < 44) { if (Int32.Parse(bleHeartHandler.heartData) > 190) StopSession(); }
-            if (Int32.Parse(comboAge.Text) > 45 && Int32.Parse(comboAge.Text) < 54) { if (Int32.Parse(bleHeartHandler.heartData) > 180) StopSession(); }
+            if (Int32.Parse(comboAge.Text) > 14 && Int32.Parse(comboAge.Text) < 24 ) { if (Int32.Parse(bleHeartHandler.heartData) > 210) { StopSession(); } }
+            if (Int32.Parse(comboAge.Text) > 25 && Int32.Parse(comboAge.Text) < 34) { if (Int32.Parse(bleHeartHandler.heartData) > 200) { StopSession(); } }
+            if (Int32.Parse(comboAge.Text) > 35 && Int32.Parse(comboAge.Text) < 44) { if (Int32.Parse(bleHeartHandler.heartData) > 190) { StopSession(); } }
+            if (Int32.Parse(comboAge.Text) > 45 && Int32.Parse(comboAge.Text) < 54) { if (Int32.Parse(bleHeartHandler.heartData) > 180) { StopSession(); } }
             if (Int32.Parse(comboAge.Text) > 55) { if (Int32.Parse(bleHeartHandler.heartData) > 170) StopSession(); }
         }
 
@@ -230,39 +250,39 @@ namespace ClientGUI
         {
             if (Int32.Parse(bleHeartHandler.heartData) < 130)
             {
-                resistance += 2;
-                if (resistance < 2)
+                if (resistance < 100)
                 {
-                    bleBikeHandler.ChangeResistance(resistance);
+                    int resist = (resistance + 1) * 2;
+                    bleBikeHandler.ChangeResistance(resist);
+                    resistanceMessage.Text = "Weerstand wordt opgevoerd";
                 }
             }
+            resistanceMessage.Text = "";
         }
 
         private void CheckRPM(int RPM)
         {
-            if (RPM < 50) {
+            if (RPM < 50)
+            {
                 rotationMessage.Text = "U fietst te langzaam. Verhoog uw snelheid";
-            } else if (RPM > 60)
+            }
+            else if (RPM > 60)
             {
                 rotationMessage.Text = "U fietst te snel. Verlaag uw snelheid";
-            } else if (RPM > 49 && RPM <61)
+            }
+            else if (RPM > 49 && RPM < 61)
             {
                 rotationMessage.Text = "U fietst een goede snelheid. Hou dit tempo aan.";
-            }
-        }
-        private void ChangeResistanceUp()
-        {
-            if (Int32.Parse(bleBikeHandler.bikeData) < 130)
-            {
-                resistance++;
-                bleBikeHandler.ChangeResistance(resistance);
             }
         }
 
         private void ChangeResistanceDown()
         {
-            resistance--;
-            bleBikeHandler.ChangeResistance(resistance);
+            if (resistance > 0)
+            {
+                resistance--;
+                bleBikeHandler.ChangeResistance(resistance);
+            }
         }
 
 

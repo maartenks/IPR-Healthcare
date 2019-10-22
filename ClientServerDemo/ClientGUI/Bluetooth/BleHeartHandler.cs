@@ -34,20 +34,18 @@ namespace ClientGUI.Bluetooth
 
         public async Task DataAsync()
         {
-            int errorCode = 0;
-            errorCode = await bleHeart.OpenDevice("Decathlon Dual HR");
 
             await bleHeart.SetService("HeartRate");
-
             bleHeart.SubscriptionValueChanged += BleHeart_SubscriptionValueChanged;
             await bleHeart.SubscribeToCharacteristic("HeartRateMeasurement");
         }
 
         private void BleHeart_SubscriptionValueChanged(object sender, BLESubscriptionValueChangedEventArgs e)
         {
-            if(e.Data[1] == 8)
+            byte[] receivedDataSubset = e.Data;
+            if (e.Data.Length == 6)
             {
-                heartData = $"{e.Data[6]}";
+                heartData = ($"{receivedDataSubset[1]}");
             }
         }
         
@@ -58,7 +56,8 @@ namespace ClientGUI.Bluetooth
 
         public async void Connect(string deviceName, string serviceName)
         {
-            int errorCode = await this.bleHeart.OpenDevice("Decathlon Dual HR");
+            int errorCode = 0;
+            await this.bleHeart.OpenDevice("Decathlon Dual HR");
             errorCode = await this.bleHeart.SetService("HeartRate");
 
             // "HeartRateMeasurement"

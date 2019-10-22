@@ -13,12 +13,13 @@ namespace Doctor
             Name = name;
             Age = age;
             Gender = gender;
-            Bpm = 0;
             FietsId = fietsId;
             workload = new List<double>();
             heartbeat = new List<double>();
-            this.histories = new List<History>(); 
+            this.histories = new List<History>();
+            rotationPerMinute = new List<double>();
             maxheartbeat = 0;
+            steadyState = false;
         }
         public List<double> workload;
 
@@ -26,14 +27,14 @@ namespace Doctor
 
         public double maxheartbeat;
 
-        public List<History> histories; 
+        public List<History> histories;
+        public bool steadyState { get; set; }
         public String Name { get; private set; }
 
         public int Age { get; set; }
 
         public String Gender { get; set; }
 
-        public int Bpm { get; set; }
 
         public String FietsId { get; set; }
 

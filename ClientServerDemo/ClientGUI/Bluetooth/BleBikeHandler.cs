@@ -103,7 +103,7 @@ namespace ClientGUI.Bluetooth
         public async void ChangeResistance(int percentage)
         {
             this.percent = percentage;
-            byte resistance = (byte) (percentage * 2);
+            byte resistance = (byte) percent;
             byte[] output = new byte[13];
                 output[0] = 0x4A; // Sync bit;
                 output[1] = 0x09; // Message Length

@@ -16,7 +16,13 @@ namespace ClientServerDemo
 {
     class Program
     {
-        public List<Patient> patients = new List<Patient>();
+        public List<Patient> patients_ = new List<Patient>();
+        private object sync = new object();
+        public List<Patient> patients
+        {
+            get { lock (sync) { return patients_; } }
+            set { lock (sync) { patients_ = value; } }
+        }
         static void Main(string[] args)
         {
             //JsonHandler json = new JsonHandler();
@@ -84,17 +90,30 @@ namespace ClientServerDemo
         {
             Console.WriteLine(patients.Count + "gaaaaaaaaaaaaaaaaaaaa");
             Console.WriteLine("hello");
-            foreach(Patient now in patients) {
-                foreach(Patient then in this.patients)
+            List<Patient> list = new List<Patient>();
+            //list = this.patients;
+            lock (sync)
+            {
+                foreach (Patient i in this.patients)
+                {
+                    list.Add(i);
+                }
+            }
+
+            foreach (Patient now in patients)
+            {
+                int i = 0;
+                foreach (Patient then in this.patients)
                 {
                     Console.WriteLine(now.Name);
                     Console.WriteLine(then.Name);
                     if (now.Name.Equals(then.Name))
                     {
-                        foreach(History history in now.histories)
+                        foreach (History history in then.histories)
                         {
                             if (!then.histories.Contains(history))
                             {
+                                list[i].histories.Add(history);
                                 then.histories.Add(history);
                             }
                         }
@@ -102,13 +121,18 @@ namespace ClientServerDemo
                     }
                     else
                     {
-                        this.patients.Add(now);
+                        list.Add(now);
                         Console.WriteLine("aaaaaaaaaaaaaaaaaaaaaaaaaaa");
                     }
+                    i++;
                 }
             }
             //this.patients.Add(new Patient("lili", 5, "male", 65, "5"));
-            ToevoegenAsync(this.patients); 
+            ToevoegenAsync(list);
+            lock (sync)
+            {
+                this.patients = list;
+            }
 
         }
         // accept new clients, add these to list and keep waiting for other clients
@@ -126,7 +150,7 @@ namespace ClientServerDemo
         {
             foreach (Server s in servers)
             {
-                s.Write($"patientData\r\n{name}\r\n{s}\r\n\r\n");
+                s.Write($"patientData\r\n{name}\r\n{v}\r\n\r\n");
             }
         }
 
