@@ -156,7 +156,7 @@ namespace ClientGUI
 
         private void CalculateSteadyState()
         {
-           
+            patient.steadyState = true;
         }
 
         private async void Timertick(object sender, EventArgs e)
