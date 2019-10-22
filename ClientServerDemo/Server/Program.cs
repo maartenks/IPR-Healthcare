@@ -85,14 +85,24 @@ namespace ClientServerDemo
         {
             this.patients = await LoadClients();
             done = true; 
-            //this.patients.Add(new Patient("lala", 3, "Vrouw", 65, "ta")); 
+           // this.patients.Add(new Patient("lala", 3, "Vrouw", 65, "ta")); 
         }
 
         public bool done { get; set; }
 
+        public void deleteddata(string filename)
+        {
+            string saveFolder = Directory.GetCurrentDirectory();
+            string savePath = Path.Combine(saveFolder, filename);
+            StreamWriter strm = File.CreateText(savePath);
+            strm.Flush();
+            strm.Close();
+        }
+
         public void save(List<Patient> patients)
         {
-            delete(); 
+            //delete(); 
+            deleteddata("Data.json"); 
             Console.WriteLine(patients.Count + "gaaaaaaaaaaaaaaaaaaaa");
             Console.WriteLine("hello");
             List<Patient> list = new List<Patient>();
@@ -132,6 +142,11 @@ namespace ClientServerDemo
                     else
                     {
                         list.Add(now);
+                        History history = new History();
+                        history.workload = now.workload;
+                        history.heartbeat = now.heartbeat;
+                        history.maxheartbeat = now.maxheartbeat;
+                        list.Last().histories.Add(history); 
                         Console.WriteLine("aaaaaaaaaaaaaaaaaaaaaaaaaaa");
                     }
                     i++;

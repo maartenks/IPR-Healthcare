@@ -134,25 +134,25 @@ namespace ClientGUI
             }
             hanna.workload = workload;
             hanna.heartbeat = heartate;
-            WritePatient("d", JsonConvert.SerializeObject(hanna));
+            //WritePatient("d", JsonConvert.SerializeObject(hanna));
             hanna1.workload = workload;
             hanna1.heartbeat = heartate;
-            WritePatient("d", JsonConvert.SerializeObject(hanna1));
+           // WritePatient("d", JsonConvert.SerializeObject(hanna1));
             hanna2.workload = workload;
             hanna2.heartbeat = heartate;
-            WritePatient("d", JsonConvert.SerializeObject(hanna2));
+            //WritePatient("d", JsonConvert.SerializeObject(hanna2));
             hanno.workload = workload;
             hanno.heartbeat = heartate;
             WritePatient("d", JsonConvert.SerializeObject(hanno));
             hanno3.workload = workload;
             hanno3.heartbeat = heartate;
-            WritePatient("d", JsonConvert.SerializeObject(hanno3));
+           // WritePatient("d", JsonConvert.SerializeObject(hanno3));
             hannb.workload = workload;
             hannb.heartbeat = heartate;
-            WritePatient("d", JsonConvert.SerializeObject(hannb));
+           // WritePatient("d", JsonConvert.SerializeObject(hannb));
             hanng.workload = workload;
             hanng.heartbeat = heartate;
-            WritePatient("d", JsonConvert.SerializeObject(hanng));
+           // WritePatient("d", JsonConvert.SerializeObject(hanng));
 
 
         }

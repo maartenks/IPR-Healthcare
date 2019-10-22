@@ -37,6 +37,7 @@ namespace Server.IO
             await Task.Run(() => File.Delete(savePath));
         }
 
+        
         public static bool FileExists(string filename)
         {
             string saveFolder = Directory.GetCurrentDirectory();
