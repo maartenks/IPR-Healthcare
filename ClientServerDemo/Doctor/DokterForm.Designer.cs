@@ -39,6 +39,7 @@
             this.BeschikbareHistroy = new System.Windows.Forms.Label();
             this.Save = new System.Windows.Forms.Button();
             this.refresh = new System.Windows.Forms.Button();
+            this.clientInfo = new System.Windows.Forms.RichTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -47,7 +48,7 @@
             this.AvailableLabel.AutoSize = true;
             this.AvailableLabel.Location = new System.Drawing.Point(30, 20);
             this.AvailableLabel.Name = "AvailableLabel";
-            this.AvailableLabel.Size = new System.Drawing.Size(126, 15);
+            this.AvailableLabel.Size = new System.Drawing.Size(186, 25);
             this.AvailableLabel.TabIndex = 0;
             this.AvailableLabel.Text = "Beschikbare Patienten:";
             // 
@@ -64,11 +65,11 @@
             // availableListBox
             // 
             this.availableListBox.FormattingEnabled = true;
-            this.availableListBox.ItemHeight = 15;
+            this.availableListBox.ItemHeight = 25;
             this.availableListBox.Location = new System.Drawing.Point(33, 39);
             this.availableListBox.Name = "availableListBox";
             this.availableListBox.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.availableListBox.Size = new System.Drawing.Size(306, 94);
+            this.availableListBox.Size = new System.Drawing.Size(306, 79);
             this.availableListBox.TabIndex = 10;
             this.availableListBox.SelectedIndexChanged += new System.EventHandler(this.AvailableListBox_SelectedIndexChanged_1);
             // 
@@ -78,14 +79,14 @@
             this.chart1.ChartAreas.Add(chartArea1);
             legend1.Name = "Legend1";
             this.chart1.Legends.Add(legend1);
-            this.chart1.Location = new System.Drawing.Point(33, 160);
+            this.chart1.Location = new System.Drawing.Point(12, 160);
             this.chart1.Name = "chart1";
             series1.ChartArea = "ChartArea1";
             series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
             series1.Legend = "Legend1";
             series1.Name = "VO2Now";
             this.chart1.Series.Add(series1);
-            this.chart1.Size = new System.Drawing.Size(727, 300);
+            this.chart1.Size = new System.Drawing.Size(555, 300);
             this.chart1.TabIndex = 11;
             this.chart1.Text = "chart1";
             this.chart1.Click += new System.EventHandler(this.Chart1_Click);
@@ -93,10 +94,10 @@
             // allHistroy
             // 
             this.allHistroy.FormattingEnabled = true;
-            this.allHistroy.ItemHeight = 15;
+            this.allHistroy.ItemHeight = 25;
             this.allHistroy.Location = new System.Drawing.Point(463, 39);
             this.allHistroy.Name = "allHistroy";
-            this.allHistroy.Size = new System.Drawing.Size(297, 94);
+            this.allHistroy.Size = new System.Drawing.Size(297, 79);
             this.allHistroy.TabIndex = 14;
             this.allHistroy.SelectedIndexChanged += new System.EventHandler(this.AllHistroy_SelectedIndexChanged);
             // 
@@ -105,7 +106,7 @@
             this.BeschikbareHistroy.AutoSize = true;
             this.BeschikbareHistroy.Location = new System.Drawing.Point(463, 20);
             this.BeschikbareHistroy.Name = "BeschikbareHistroy";
-            this.BeschikbareHistroy.Size = new System.Drawing.Size(106, 15);
+            this.BeschikbareHistroy.Size = new System.Drawing.Size(161, 25);
             this.BeschikbareHistroy.TabIndex = 15;
             this.BeschikbareHistroy.Text = "Beschikbar hystory";
             // 
@@ -129,13 +130,22 @@
             this.refresh.UseVisualStyleBackColor = true;
             this.refresh.Click += new System.EventHandler(this.Refresh_Click);
             // 
+            // clientInfo
+            // 
+            this.clientInfo.Location = new System.Drawing.Point(573, 160);
+            this.clientInfo.Name = "clientInfo";
+            this.clientInfo.Size = new System.Drawing.Size(236, 300);
+            this.clientInfo.TabIndex = 18;
+            this.clientInfo.Text = "";
+            // 
             // DokterForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.BackColor = System.Drawing.Color.GhostWhite;
             this.ClientSize = new System.Drawing.Size(821, 501);
+            this.Controls.Add(this.clientInfo);
             this.Controls.Add(this.refresh);
             this.Controls.Add(this.Save);
             this.Controls.Add(this.BeschikbareHistroy);
@@ -164,6 +174,7 @@
         private System.Windows.Forms.Label BeschikbareHistroy;
         private System.Windows.Forms.Button Save;
         private System.Windows.Forms.Button refresh;
+        private System.Windows.Forms.RichTextBox clientInfo;
     }
 }
 

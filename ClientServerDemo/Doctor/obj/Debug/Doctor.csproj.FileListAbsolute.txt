@@ -37,3 +37,16 @@ C:\Users\joelle\Desktop\VERYLASTIPR\IPR-Healthcare\ClientServerDemo\Doctor\obj\D
 C:\Users\joelle\Desktop\VERYLASTIPR\IPR-Healthcare\ClientServerDemo\Doctor\obj\Debug\Doctor.csproj.CopyComplete
 C:\Users\joelle\Desktop\VERYLASTIPR\IPR-Healthcare\ClientServerDemo\Doctor\obj\Debug\Doctor.exe
 C:\Users\joelle\Desktop\VERYLASTIPR\IPR-Healthcare\ClientServerDemo\Doctor\obj\Debug\Doctor.pdb
+C:\Users\maart\OneDrive\Documenten\Proftaak Weerstation\weerstation\IPR-Healthcare\ClientServerDemo\Doctor\bin\Debug\Doctor.exe.config
+C:\Users\maart\OneDrive\Documenten\Proftaak Weerstation\weerstation\IPR-Healthcare\ClientServerDemo\Doctor\bin\Debug\Doctor.exe
+C:\Users\maart\OneDrive\Documenten\Proftaak Weerstation\weerstation\IPR-Healthcare\ClientServerDemo\Doctor\bin\Debug\Doctor.pdb
+C:\Users\maart\OneDrive\Documenten\Proftaak Weerstation\weerstation\IPR-Healthcare\ClientServerDemo\Doctor\bin\Debug\Newtonsoft.Json.dll
+C:\Users\maart\OneDrive\Documenten\Proftaak Weerstation\weerstation\IPR-Healthcare\ClientServerDemo\Doctor\bin\Debug\Newtonsoft.Json.xml
+C:\Users\maart\OneDrive\Documenten\Proftaak Weerstation\weerstation\IPR-Healthcare\ClientServerDemo\Doctor\obj\Debug\Doctor.csprojAssemblyReference.cache
+C:\Users\maart\OneDrive\Documenten\Proftaak Weerstation\weerstation\IPR-Healthcare\ClientServerDemo\Doctor\obj\Debug\Doctor.DokterForm.resources
+C:\Users\maart\OneDrive\Documenten\Proftaak Weerstation\weerstation\IPR-Healthcare\ClientServerDemo\Doctor\obj\Debug\Doctor.Properties.Resources.resources
+C:\Users\maart\OneDrive\Documenten\Proftaak Weerstation\weerstation\IPR-Healthcare\ClientServerDemo\Doctor\obj\Debug\Doctor.csproj.GenerateResource.cache
+C:\Users\maart\OneDrive\Documenten\Proftaak Weerstation\weerstation\IPR-Healthcare\ClientServerDemo\Doctor\obj\Debug\Doctor.csproj.CoreCompileInputs.cache
+C:\Users\maart\OneDrive\Documenten\Proftaak Weerstation\weerstation\IPR-Healthcare\ClientServerDemo\Doctor\obj\Debug\Doctor.csproj.CopyComplete
+C:\Users\maart\OneDrive\Documenten\Proftaak Weerstation\weerstation\IPR-Healthcare\ClientServerDemo\Doctor\obj\Debug\Doctor.exe
+C:\Users\maart\OneDrive\Documenten\Proftaak Weerstation\weerstation\IPR-Healthcare\ClientServerDemo\Doctor\obj\Debug\Doctor.pdb
