@@ -24,3 +24,16 @@ C:\Users\joelle\Desktop\IPRLAASTE\IPR-Healthcare\ClientServerDemo\Doctor\obj\Deb
 C:\Users\joelle\Desktop\IPRLAASTE\IPR-Healthcare\ClientServerDemo\Doctor\obj\Debug\Doctor.csproj.CopyComplete
 C:\Users\joelle\Desktop\IPRLAASTE\IPR-Healthcare\ClientServerDemo\Doctor\obj\Debug\Doctor.exe
 C:\Users\joelle\Desktop\IPRLAASTE\IPR-Healthcare\ClientServerDemo\Doctor\obj\Debug\Doctor.pdb
+C:\Users\joelle\Desktop\VERYLASTIPR\IPR-Healthcare\ClientServerDemo\Doctor\bin\Debug\Doctor.exe.config
+C:\Users\joelle\Desktop\VERYLASTIPR\IPR-Healthcare\ClientServerDemo\Doctor\bin\Debug\Doctor.exe
+C:\Users\joelle\Desktop\VERYLASTIPR\IPR-Healthcare\ClientServerDemo\Doctor\bin\Debug\Doctor.pdb
+C:\Users\joelle\Desktop\VERYLASTIPR\IPR-Healthcare\ClientServerDemo\Doctor\bin\Debug\Newtonsoft.Json.dll
+C:\Users\joelle\Desktop\VERYLASTIPR\IPR-Healthcare\ClientServerDemo\Doctor\bin\Debug\Newtonsoft.Json.xml
+C:\Users\joelle\Desktop\VERYLASTIPR\IPR-Healthcare\ClientServerDemo\Doctor\obj\Debug\Doctor.csprojAssemblyReference.cache
+C:\Users\joelle\Desktop\VERYLASTIPR\IPR-Healthcare\ClientServerDemo\Doctor\obj\Debug\Doctor.DokterForm.resources
+C:\Users\joelle\Desktop\VERYLASTIPR\IPR-Healthcare\ClientServerDemo\Doctor\obj\Debug\Doctor.Properties.Resources.resources
+C:\Users\joelle\Desktop\VERYLASTIPR\IPR-Healthcare\ClientServerDemo\Doctor\obj\Debug\Doctor.csproj.GenerateResource.cache
+C:\Users\joelle\Desktop\VERYLASTIPR\IPR-Healthcare\ClientServerDemo\Doctor\obj\Debug\Doctor.csproj.CoreCompileInputs.cache
+C:\Users\joelle\Desktop\VERYLASTIPR\IPR-Healthcare\ClientServerDemo\Doctor\obj\Debug\Doctor.csproj.CopyComplete
+C:\Users\joelle\Desktop\VERYLASTIPR\IPR-Healthcare\ClientServerDemo\Doctor\obj\Debug\Doctor.exe
+C:\Users\joelle\Desktop\VERYLASTIPR\IPR-Healthcare\ClientServerDemo\Doctor\obj\Debug\Doctor.pdb

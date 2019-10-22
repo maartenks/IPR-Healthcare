@@ -38,6 +38,7 @@
             this.allHistroy = new System.Windows.Forms.ListBox();
             this.BeschikbareHistroy = new System.Windows.Forms.Label();
             this.Save = new System.Windows.Forms.Button();
+            this.refresh = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -118,6 +119,16 @@
             this.Save.UseVisualStyleBackColor = true;
             this.Save.Click += new System.EventHandler(this.Save_Click);
             // 
+            // refresh
+            // 
+            this.refresh.Location = new System.Drawing.Point(367, 39);
+            this.refresh.Name = "refresh";
+            this.refresh.Size = new System.Drawing.Size(75, 23);
+            this.refresh.TabIndex = 17;
+            this.refresh.Text = "Refresh";
+            this.refresh.UseVisualStyleBackColor = true;
+            this.refresh.Click += new System.EventHandler(this.Refresh_Click);
+            // 
             // DokterForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -125,6 +136,7 @@
             this.AutoSize = true;
             this.BackColor = System.Drawing.Color.GhostWhite;
             this.ClientSize = new System.Drawing.Size(821, 501);
+            this.Controls.Add(this.refresh);
             this.Controls.Add(this.Save);
             this.Controls.Add(this.BeschikbareHistroy);
             this.Controls.Add(this.allHistroy);
@@ -151,6 +163,7 @@
         private System.Windows.Forms.ListBox allHistroy;
         private System.Windows.Forms.Label BeschikbareHistroy;
         private System.Windows.Forms.Button Save;
+        private System.Windows.Forms.Button refresh;
     }
 }
 

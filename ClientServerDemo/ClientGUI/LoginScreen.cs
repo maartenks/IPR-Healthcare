@@ -47,6 +47,7 @@ namespace ClientGUI
 
         public LoginScreen()
         {
+            
             InitializeComponent();
             InitializeDeclarations();
             LoadBikes();
@@ -98,6 +99,8 @@ namespace ClientGUI
                 await bleBikeHandler.DataAsync();
                 bleBikeHandler.ChangeResistance(0);
             }
+            ConnectServer();
+            MockData(); 
             }
 
         private void ConnectServer()
@@ -107,6 +110,47 @@ namespace ClientGUI
 
             stream = client.GetStream();
             stream.BeginRead(buffer, 0, buffer.Length, new AsyncCallback(OnRead), null);
+
+        }
+
+        private void MockData()
+        {
+            Patient hanna = new Patient("hanna", 5, "Vrouw", 50, "i");
+            Patient hanna1 = new Patient("hanna", 5, "Vrouw", 50, "i");
+            Patient hanna2 = new Patient("hanna", 5, "Vrouw", 50, "i");
+            Patient hanno = new Patient("hannd", 5, "Vrouw", 50, "i");
+            Patient hanno3 = new Patient("hannd", 5, "Vrouw", 50, "i");
+            Patient hannb = new Patient("hannf", 5, "Vrouw", 50, "i");
+            Patient hanng = new Patient("hanng", 5, "Vrouw", 50, "i");
+            List<double> workload = new List<double>();
+            List<double> heartate = new List<double>(); 
+            for(int i = 0; i < 20; i++)
+            {
+                workload.Add(i * 4);
+                heartate.Add(i * 5); 
+            }
+            hanna.workload = workload;
+            hanna.heartbeat = heartate;
+            WritePatient("d", JsonConvert.SerializeObject(hanna));
+            hanna1.workload = workload;
+            hanna1.heartbeat = heartate;
+            WritePatient("d", JsonConvert.SerializeObject(hanna1));
+            hanna2.workload = workload;
+            hanna2.heartbeat = heartate;
+            WritePatient("d", JsonConvert.SerializeObject(hanna2));
+            hanno.workload = workload;
+            hanno.heartbeat = heartate;
+            WritePatient("d", JsonConvert.SerializeObject(hanno));
+            hanno3.workload = workload;
+            hanno3.heartbeat = heartate;
+            WritePatient("d", JsonConvert.SerializeObject(hanno3));
+            hannb.workload = workload;
+            hannb.heartbeat = heartate;
+            WritePatient("d", JsonConvert.SerializeObject(hannb));
+            hanng.workload = workload;
+            hanng.heartbeat = heartate;
+            WritePatient("d", JsonConvert.SerializeObject(hanng));
+
 
         }
 
@@ -160,10 +204,10 @@ namespace ClientGUI
         {
             if (maxHeart < Int32.Parse(bleHeartHandler.heartData))
             {
-                maxHeart = Int32.Parse(bleHeartHandler.heartData;
+                maxHeart = Int32.Parse(bleHeartHandler.heartData);
             } else if (minHeart > Int32.Parse(bleHeartHandler.heartData))
             {
-                minHeart = Int32.Parse(bleHeartHandler.heartData;
+                minHeart = Int32.Parse(bleHeartHandler.heartData);
             }
         
         }

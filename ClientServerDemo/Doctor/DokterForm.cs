@@ -111,7 +111,7 @@ namespace Doctor
                 case "patientData":
                     this.patients.Clear();
                     this.patients = JsonConvert.DeserializeObject<List<Patient>>(data[1]);
-                    PatientsInList(); 
+                    //PatientsInList(); 
                     /*if (patients.Find(pat => pat.Name == data[1]) != null)
                     {
                         patients.Find(pat => pat == JsonConvert.DeserializeObject<Patient>(data[2]));
@@ -302,6 +302,11 @@ namespace Doctor
             int index = allHistroy.SelectedIndex;
             writechart(patient.histories[index], this.patient); 
 
+        }
+
+        private void Refresh_Click(object sender, EventArgs e)
+        {
+            PatientsInList(); 
         }
     }
 
