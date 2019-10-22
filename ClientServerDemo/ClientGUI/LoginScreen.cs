@@ -170,6 +170,8 @@ namespace ClientGUI
             this.minutes = totalSeconds / 60;
             if (totalSeconds % 15 == 0)
             {
+                patient.workload.Add(bleBikeHandler.workload);
+                patient.heartbeat.Add(Int32.Parse(bleHeartHandler.heartData));
                 if (intensive)
                 {
                     steadyState.Add(Int32.Parse(bleHeartHandler.heartData));
@@ -213,12 +215,12 @@ namespace ClientGUI
             }
                 if (intensive)
             {
-                MaxHeartFrequencyHit(); SteadyState();
+                MaxHeartFrequencyHit();
+                SteadyState();
             }
             realtimePhase.Text = phase.ToString();
             realtimeRPM.Text = bleBikeHandler.bikeData;
             patient.rotationPerMinute.Add(Int32.Parse(bleBikeHandler.bikeData));
-            patient.heartbeat.Add(Int32.Parse(bleHeartHandler.heartData));
             if (patient.maxheartbeat < Int32.Parse(bleHeartHandler.heartData))
             {
                 patient.maxheartbeat = Int32.Parse(bleHeartHandler.heartData);
@@ -226,6 +228,9 @@ namespace ClientGUI
             realtimeHF.Text = bleHeartHandler.heartData;
             realtimeResistance.Text = bleBikeHandler.percent + "%";
             CheckRPM(Int32.Parse(bleBikeHandler.bikeData));
+            drawHeartrate(totalSeconds, Int32.Parse(bleHeartHandler.heartData));
+            drawRPM(totalSeconds, Int32.Parse(bleBikeHandler.bikeData));
+
 
 
         }
@@ -262,8 +267,10 @@ namespace ClientGUI
             {
                 if (resistance < 100)
                 {
-                    int resist = (resistance + 1) * 2;
+                    resistance++;
+                    int resist = resistance * 2;
                     bleBikeHandler.ChangeResistance(resist);
+                    resistanceMessage.ForeColor = Color.Black;
                     resistanceMessage.Text = "Weerstand wordt opgevoerd";
                 }
             }
@@ -272,6 +279,7 @@ namespace ClientGUI
 
         private void CheckRPM(int RPM)
         {
+            rotationMessage.ForeColor = Color.Black;
             if (RPM < 50)
             {
                 rotationMessage.Text = "U fietst te langzaam. Verhoog uw snelheid";

@@ -46,6 +46,7 @@ namespace ClientGUI.Bluetooth
             if (e.Data.Length == 6)
             {
                 heartData = ($"{receivedDataSubset[1]}");
+                
             }
         }
         

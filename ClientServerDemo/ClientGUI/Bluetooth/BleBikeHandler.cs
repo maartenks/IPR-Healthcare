@@ -26,6 +26,7 @@ namespace ClientGUI.Bluetooth
         public int errorCode;
         private PageConversion pageConversion;
         public int percent;
+        public int workload;
 
         public async Task<bool> InitBleBike()
         {
@@ -78,10 +79,14 @@ namespace ClientGUI.Bluetooth
 
         private void BleBike_SubscriptionValueChanged(object sender, BLESubscriptionValueChangedEventArgs e)
         {
-
+            
             if (e.Data[4] == 0x19)
             {
                 bikeData = $"{e.Data[6]}";
+                int instandpowerLSB = e.Data[5];
+                int instandpowerMSB = e.Data[6];
+                int work1 = (((instandpowerMSB | 0b11110000) ^ 0b11110000) << 8) | instandpowerLSB;
+                workload = (int) (work1 * 6.1182972778676);
 
             }
         }
