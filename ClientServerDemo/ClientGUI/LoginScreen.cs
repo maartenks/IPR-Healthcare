@@ -230,6 +230,16 @@ namespace ClientGUI
 
         }
 
+        private void drawHeartrate(int time, int heart)
+        {
+            chart1.Series["Heartrate"].Points.AddXY(time, heart);
+        }
+
+        private void drawRPM(int time, int RPM)
+        {
+            chart1.Series["RPM"].Points.AddXY(time, RPM); 
+        }
+
         private void StopSession()
         {
             time.Stop();
