@@ -34,22 +34,24 @@ namespace Doctor
             this.port = 80; 
             selectedPatients = new List<Patient>();
             availablePatients = new List<Patient>();
-            this.patients.Add(new Patient("lili", 5 , "male", 65, "5"));
+            //this.patients.Add(new Patient("lili", 5 , "male", 65, "5"));
             ConnectServer();
 
             // testDataAvailablePatients();
-            foreach (Patient now in patients) {
+            PatientsInList(); 
+
+
+        }
+
+        public void PatientsInList()
+        {
+            availableListBox.Items.Clear();
+            foreach (Patient now in patients)
+            {
 
                 availableListBox.Items.Add(now.Name);
-                allHistroy.Items.Add("now");
-                foreach(History then in now.histories)
-                {
-                    allHistroy.Items.Add(then.workload);
-                }
-              }
-
-
-
+                
+            }
         }
 
         private void ConnectServer()
@@ -85,11 +87,11 @@ namespace Doctor
 
         }
 
-        private void writechart(Patient patient)
+        private void writechart(History patient, Patient now)
         { int i = 0;
             foreach (double hearbeat in patient.heartbeat)
             {
-                chart1.Series["VO2Now"].Points.AddXY(1, calculateVo2(patient.workload[i], hearbeat, patient) );
+                chart1.Series["VO2Now"].Points.AddXY(1, calculateVo2(patient.workload[i], hearbeat, now) );
                 i++;
                     
             }
@@ -107,13 +109,16 @@ namespace Doctor
                    // bleBikeHandler.ChangeResistance(Int32.Parse(data[1]));
                     break;
                 case "patientData":
-                    if (patients.Find(pat => pat.Name == data[1]) != null)
+                    this.patients.Clear();
+                    this.patients = JsonConvert.DeserializeObject<List<Patient>>(data[1]);
+                    PatientsInList(); 
+                    /*if (patients.Find(pat => pat.Name == data[1]) != null)
                     {
                         patients.Find(pat => pat == JsonConvert.DeserializeObject<Patient>(data[2]));
                     } else
                     {
                         patients.Add(JsonConvert.DeserializeObject<Patient>(data[2]));
-                    }
+                    }*/
                     break;
                 default:
                     Console.WriteLine("Onbekend pakketje");
@@ -132,7 +137,7 @@ namespace Doctor
         private double calculateVo2(double workload, double HRss, Patient patient)
         {
             double VO2max = 0;
-            if (patient.Gender.Equals("female"))
+            if (patient.Gender.Equals("Vrouw"))
             {
                 VO2max = (0.00193 * workload +0.326) / (0.769 * HRss - 56.1) * 100; 
             }else 
@@ -264,10 +269,7 @@ namespace Doctor
 
         }
 
-        private void AllHistroy_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
+       
 
         private void Form1_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
@@ -280,6 +282,26 @@ namespace Doctor
         {
             string json = JsonConvert.SerializeObject(this.patients);
             Write("stop\r\n" + json + "\r\n\r\n");
+        }
+
+        private Patient patient; 
+        private void AvailableListBox_SelectedIndexChanged_1(object sender, EventArgs e)
+        {
+            
+            int index = availableListBox.SelectedIndex;
+            this.patient = this.patients[index];
+            allHistroy.Items.Clear(); 
+            foreach(History history in this.patients[index].histories)
+            {
+                allHistroy.Items.Add(this.patients[index].Name +" "  + index); 
+            }
+        }
+
+        private void AllHistroy_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int index = allHistroy.SelectedIndex;
+            writechart(patient.histories[index], this.patient); 
+
         }
     }
 
