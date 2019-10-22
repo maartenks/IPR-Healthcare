@@ -274,8 +274,8 @@ namespace ClientGUI
         private void StopSession()
         {
             time.Stop();
-            steadyStateMessage.ForeColor = Color.Black;
-            steadyStateMessage.Text = "De sessie is gestopt en wordt afgebroken.";
+            instructions.Clear();
+            instructions.AppendText("De sessie is gestopt en wordt afgebroken.");
             startSession.Enabled = false;
         }
         private void MaxHeartFrequencyHit()
