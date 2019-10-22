@@ -13,6 +13,7 @@ namespace ClientGUI
             Name = name;
             Age = age;
             Gender = gender;
+            this.weight = weight;
             FietsId = fietsId;
             workload = new List<double>();
             heartbeat = new List<double>();
@@ -26,6 +27,7 @@ namespace ClientGUI
 
         public double maxheartbeat;
 
+        public int weight { get; set; }
         public bool steadyState { get; set; }
 
         public String Name { get; private set; }
@@ -39,7 +41,16 @@ namespace ClientGUI
 
         public List<double> rotationPerMinute { get; set; }
 
-
+        public String getSteadyState()
+        {
+            if (steadyState == true)
+            {
+                return "bereikt";
+            } else
+            {
+                return "niet bereikt";
+            }
+        }
         public String toString()
         {
             return $"{Name} - {FietsId} ";

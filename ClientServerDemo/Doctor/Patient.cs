@@ -13,6 +13,7 @@ namespace Doctor
             Name = name;
             Age = age;
             Gender = gender;
+            this.weight = weight;
             FietsId = fietsId;
             workload = new List<double>();
             heartbeat = new List<double>();
@@ -26,6 +27,7 @@ namespace Doctor
         public List<double> heartbeat;
 
         public double maxheartbeat;
+        public int weight { get; set; }
 
         public List<History> histories;
         public bool steadyState { get; set; }
@@ -40,7 +42,17 @@ namespace Doctor
 
         public List<double> rotationPerMinute { get; set; }
 
-
+        public String getSteadyState()
+        {
+            if (steadyState == true)
+            {
+                return "bereikt";
+            }
+            else
+            {
+                return "niet bereikt";
+            }
+        }
         public String toString()
         {
             return $"{Name} - {FietsId} ";

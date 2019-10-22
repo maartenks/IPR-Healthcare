@@ -101,7 +101,7 @@ namespace ClientServerDemo
 
         public void save(List<Patient> patients)
         {
-            //delete(); 
+            //delete    (); 
             deleteddata("Data.json"); 
             Console.WriteLine(patients.Count + "gaaaaaaaaaaaaaaaaaaaa");
             Console.WriteLine("hello");
@@ -143,7 +143,7 @@ namespace ClientServerDemo
                 {
                     Console.WriteLine(now.Name);
                     Console.WriteLine(then.Name);
-                    if (now.Name.Equals(then.Name))
+                    if (then.Name.Equals(now.Name))
                     {
                         /*foreach (History history in then.histories)
                         {

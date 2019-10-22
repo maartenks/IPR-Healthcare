@@ -290,6 +290,8 @@ namespace Doctor
             
             int index = availableListBox.SelectedIndex;
             this.patient = this.patients[index];
+            clientInfo.Clear();
+            clientInfo.AppendText($"Naam: {patient.Name}\r\nGeslacht: {patient.Gender}\r\nLeeftijd: {patient.Age}\r\nGewicht: {patient.weight}\r\nMaximale harstlag: {patient.maxheartbeat}\r\n Steady state: {patient.getSteadyState()}");
             allHistroy.Items.Clear(); 
             foreach(History history in this.patients[index].histories)
             {
