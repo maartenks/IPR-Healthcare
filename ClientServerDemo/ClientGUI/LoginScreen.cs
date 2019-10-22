@@ -38,6 +38,8 @@ namespace ClientGUI
         private int phaseTime = 120;
         private int phaseTimeMin;
         private int phaseTimeSec;
+        private int maxHeart;
+        private int minHeart;
         private int totalSeconds = 0;
         private bool intensive = false;
         private int resistance = 0;
@@ -156,7 +158,27 @@ namespace ClientGUI
 
         private void CalculateSteadyState()
         {
-            patient.steadyState = true;
+            if (maxHeart < Int32.Parse(bleHeartHandler.heartData))
+            {
+                maxHeart = Int32.Parse(bleHeartHandler.heartData;
+            } else if (minHeart > Int32.Parse(bleHeartHandler.heartData))
+            {
+                minHeart = Int32.Parse(bleHeartHandler.heartData;
+            }
+        
+        }
+        
+        private void RealSteadyState()
+        {
+            int diff = maxHeart - minHeart;
+            if (diff > 6)
+            {
+                patient.steadyState = true;
+            }
+            else
+            {
+                patient.steadyState = false;
+            }
         }
 
         private async void Timertick(object sender, EventArgs e)
@@ -207,7 +229,7 @@ namespace ClientGUI
             }
             if (timePassed.Text == "06:00")
             {
-                CoolingDown();    phaseTime = 60; phase++;       intensive = false; ChangeResistanceDown();  CalculateSteadyState();
+                CoolingDown();    phaseTime = 60; phase++;       intensive = false; ChangeResistanceDown();  RealSteadyState();
             }
                 if (timePassed.Text == "07:00")
             {
@@ -217,6 +239,10 @@ namespace ClientGUI
             {
                 MaxHeartFrequencyHit();
                 SteadyState();
+            }
+                if (intensive && totalSeconds > 240)
+            {
+                CalculateSteadyState();
             }
             realtimePhase.Text = phase.ToString();
             realtimeRPM.Text = bleBikeHandler.bikeData;
